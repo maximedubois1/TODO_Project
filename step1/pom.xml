@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tuto.springboot</groupId>
-	<artifactId>SPWebApp</artifactId>
+	<artifactId>SPWebAppStep1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SPWebApp</name>
 	<description>Tuto project for Spring Boot</description>
@@ -36,6 +36,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
