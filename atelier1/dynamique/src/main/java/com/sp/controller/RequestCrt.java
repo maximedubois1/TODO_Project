@@ -1,21 +1,24 @@
 package com.sp.controller;
 
-import com.sp.model.Poney;
-import com.sp.model.PoneyFormDTO;
+import com.sp.model.CardDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.io.IOException;
 
 @Controller
 public class RequestCrt {
 
     private static String messageLocal = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
     @Autowired
-    PoneyDao poneyDao;
+    CardDao cardDao;
     @Value("${welcome.message}")
     private String message;
 
@@ -26,31 +29,27 @@ public class RequestCrt {
         return "index";
     }
 
-    @RequestMapping(value = {"/view"}, method = RequestMethod.GET)
-    public String view(Model model) {
-        model.addAttribute("myPoney", poneyDao.getRandomPoney());
-        return "poneyView";
+    @RequestMapping(value = {"/addCard"}, method = RequestMethod.GET)
+    public String addCard(Model model) {
+        CardDTO cardDTO = new CardDTO();
+        model.addAttribute("newCardForm", cardDTO);
+
+        return "newCardForm";
     }
 
-    @RequestMapping(value = {"/addPoney"}, method = RequestMethod.GET)
-    public String addponey(Model model) {
-        PoneyFormDTO poneyForm = new PoneyFormDTO();
-        model.addAttribute("poneyForm", poneyForm);
-        return "poneyForm";
+    @RequestMapping(value = {"/addCard"}, method = RequestMethod.POST)
+    public String addCard(Model model, @ModelAttribute("newCardform") CardDTO cardDTO) throws IOException {
+        CardDTO c = cardDao.addCard(cardDTO);
+        model.addAttribute("card", c);
+
+        return "cardView";
     }
 
-    @RequestMapping(value = {"/addPoney"}, method = RequestMethod.POST)
-    public String addponey(Model model, @ModelAttribute("poneyForm") PoneyFormDTO poneyForm) {
-        Poney p = poneyDao.addPoney(poneyForm.getName(), poneyForm.getColor(), poneyForm.getSuperPower(), poneyForm.getImgUrl());
-        model.addAttribute("myPoney", p);
-        return "poneyView";
+    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
+    public String showCard(Model model, @PathVariable("id") int id) throws IOException {
+        CardDTO cardDTO = cardDao.getCardById(id);
+        model.addAttribute("card", cardDTO);
+
+        return "cardView";
     }
-
-    @RequestMapping(value = {"/list"}, method = RequestMethod.GET)
-    public String viewList(Model model) {
-        model.addAttribute("poneyList", poneyDao.getPoneyList());
-        return "poneyViewList";
-    }
-
-
 }
