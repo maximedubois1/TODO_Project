@@ -15,19 +15,8 @@ import java.io.IOException;
 @Controller
 public class RequestCrt {
 
-    private static String messageLocal = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-
     @Autowired
     CardDao cardDao;
-    @Value("${welcome.message}")
-    private String message;
-
-    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
-    public String index(Model model) {
-        model.addAttribute("messageLocal", messageLocal);
-        model.addAttribute("message", message);
-        return "index";
-    }
 
     @RequestMapping(value = {"/addCard"}, method = RequestMethod.GET)
     public String addCard(Model model) {
