@@ -27,4 +27,11 @@ public class CardDao {
         return CardDTO.fromJson(HttpUtils.sendGetRequest(url + "/cards"));
     }
 
+    public CardDTO getCardById(int id) throws IOException {
+        return CardDTO.fromJson(HttpUtils.sendGetRequest(url + "/card/" + id));
+    }
+
+    public void deleteCard(int id) throws IOException {
+        HttpUtils.sendDeleteRequest(url + "/card/" + id);
+    }
 }

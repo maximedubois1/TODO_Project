@@ -37,6 +37,17 @@ public class HttpUtils {
         return response;
     }
 
+    public static String sendDeleteRequest(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("DELETE");
+
+        String response = readResponse(connection);
+
+        connection.disconnect();
+        return response;
+    }
+
     private static String readResponse(HttpURLConnection connection) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder response = new StringBuilder();
