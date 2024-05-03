@@ -69,8 +69,7 @@ public class RequestCrt {
     public String addCard (Model model, @ModelAttribute("newCardform") CardDTO cardDTO) {
         try {
 
-            String c = cardDao.addCard(cardDTO);
-            //TODO
+            CardDTO c = cardDao.addCard(cardDTO);
             model.addAttribute("card", c);
         } catch (Exception e) {
             e.printStackTrace();

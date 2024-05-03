@@ -34,6 +34,58 @@ public class CardDTO {
         this.userId = 0;
     }
 
+    public static CardDTO fromJson(String json) {
+        CardDTO cardDTO = new CardDTO();
+        String[] parts = json.split(",");
+        for (String part : parts) {
+            String[] keyValue = part.split(":");
+            String key = keyValue[0].replace("\"", "");
+            String value = keyValue[1].replace("\"", "");
+            switch (key) {
+                case "name":
+                    cardDTO.setName(value);
+                    break;
+                case "description":
+                    cardDTO.setDescription(value);
+                    break;
+                case "family":
+                    cardDTO.setFamily(value);
+                    break;
+                case "affinity":
+                    cardDTO.setAffinity(value);
+                    break;
+                case "imgUrl":
+                    cardDTO.setImgUrl(value);
+                    break;
+                case "smallImgUrl":
+                    cardDTO.setSmallImgUrl(value);
+                    break;
+                case "id":
+                    cardDTO.setId(Integer.parseInt(value));
+                    break;
+                case "energy":
+                    cardDTO.setEnergy(Integer.parseInt(value));
+                    break;
+                case "hp":
+                    cardDTO.setHp(Integer.parseInt(value));
+                    break;
+                case "defence":
+                    cardDTO.setDefence(Integer.parseInt(value));
+                    break;
+                case "attack":
+                    cardDTO.setAttack(Integer.parseInt(value));
+                    break;
+                case "price":
+                    cardDTO.setPrice(Integer.parseInt(value));
+                    break;
+                case "userId":
+                    cardDTO.setUserId(Integer.parseInt(value));
+                    break;
+            }
+        }
+        return cardDTO;
+    }
+
     public String getName() {
         return name;
     }
