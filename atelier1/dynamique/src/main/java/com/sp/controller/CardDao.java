@@ -10,12 +10,7 @@ import java.util.List;
 
 @Service
 public class CardDao {
-    private List<CardDTO> cardDTOList;
     private final String url = "http://tp.cpe.fr:8083";
-
-    public CardDao() {
-        cardDTOList = new ArrayList<>();
-    }
 
     public CardDTO addCard(CardDTO cardDTO) throws IOException {
 
