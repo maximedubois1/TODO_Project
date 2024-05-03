@@ -11,11 +11,11 @@ public class CardDTO {
     private String imgUrl;
     private String smallImgUrl;
     private int id;
-    private int energy;
-    private int hp;
-    private int defence;
-    private int attack;
-    private int price;
+    private float energy;
+    private float hp;
+    private float defence;
+    private float attack;
+    private float price;
     private int userId;
 
     public CardDTO() {
@@ -35,7 +35,9 @@ public class CardDTO {
     }
 
     public static CardDTO fromJson(String json) {
+        System.out.println("json: " + json);
         CardDTO cardDTO = new CardDTO();
+        json = json.replace("{", "").replace("}", "");
         String[] parts = json.split(",");
         for (String part : parts) {
             String[] keyValue = part.split(":");
@@ -64,22 +66,23 @@ public class CardDTO {
                     cardDTO.setId(Integer.parseInt(value));
                     break;
                 case "energy":
-                    cardDTO.setEnergy(Integer.parseInt(value));
+                    cardDTO.setEnergy(Float.parseFloat(value));
                     break;
                 case "hp":
-                    cardDTO.setHp(Integer.parseInt(value));
+                    cardDTO.setHp(Float.parseFloat(value));
                     break;
                 case "defence":
-                    cardDTO.setDefence(Integer.parseInt(value));
+                    cardDTO.setDefence(Float.parseFloat(value));
                     break;
                 case "attack":
-                    cardDTO.setAttack(Integer.parseInt(value));
+                    cardDTO.setAttack(Float.parseFloat(value));
                     break;
                 case "price":
-                    cardDTO.setPrice(Integer.parseInt(value));
+                    cardDTO.setPrice(Float.parseFloat(value));
                     break;
                 case "userId":
-                    cardDTO.setUserId(Integer.parseInt(value));
+                    if (!value.equals("null"))
+                        cardDTO.setUserId(Integer.parseInt(value));
                     break;
             }
         }
@@ -142,43 +145,43 @@ public class CardDTO {
         this.id = id;
     }
 
-    public int getEnergy() {
+    public float getEnergy() {
         return energy;
     }
 
-    public void setEnergy(int energy) {
+    public void setEnergy(float energy) {
         this.energy = energy;
     }
 
-    public int getHp() {
+    public float getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(float hp) {
         this.hp = hp;
     }
 
-    public int getDefence() {
+    public float getDefence() {
         return defence;
     }
 
-    public void setDefence(int defence) {
+    public void setDefence(float defence) {
         this.defence = defence;
     }
 
-    public int getAttack() {
+    public float getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    public void setAttack(float attack) {
         this.attack = attack;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

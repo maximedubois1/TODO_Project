@@ -10,19 +10,16 @@
     <h1> THIS IS A DEFAULT HEADER</h1>
 </div>
 <div>
-    <img th:src="${myPoney.imgUrl}" alt="">
+    <h3 th:utext="${card.family}">...</h3>
+    <h3 th:utext="${card.name}">...</h3>
+    <img th:src="${card.imgUrl}" alt="card image">
+    <p th:utext="${card.description}">...</p>
+    <p th:text="'Affinity: '+${card.affinity}">...</p>
+    <p th:text="'HP: '+${card.hp}">...</p>
+    <p th:text="'Energy: '+${card.energy}">...</p>
+    <p th:text="'Attack: '+${card.attack}">...</p>
+    <p th:text="'Defence: '+${card.defence}">...</p>
 
-    <h3 th:utext="${myPoney.name}">...</h3>
-
-    <div th:style="'background-color:'+${myPoney.color}">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt.
-        </p>
-    </div>
-
-    <h5 th:text="'Color:  '+${myPoney.color}">...</h5>
-    <h5 th:text="'SuperPower:  '+${myPoney.superPower}">...</h5>
 </div>
 </body>
 </html>
