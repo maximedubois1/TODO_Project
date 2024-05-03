@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CardDTO {
+
     private String name;
     private String description;
     private String family;
@@ -32,6 +33,22 @@ public class CardDTO {
         this.attack = 0;
         this.price = 0;
         this.userId = 0;
+    }
+
+    public CardDTO(String name, String description, String family, String affinity, String imgUrl, String smallImgUrl, int id, float energy, float hp, float defence, float attack, float price, int userId) {
+        this.name = name;
+        this.description = description;
+        this.family = family;
+        this.affinity = affinity;
+        this.imgUrl = imgUrl;
+        this.smallImgUrl = smallImgUrl;
+        this.id = id;
+        this.energy = energy;
+        this.hp = hp;
+        this.defence = defence;
+        this.attack = attack;
+        this.price = price;
+        this.userId = userId;
     }
 
     public static CardDTO fromJson(String json) {
@@ -206,7 +223,8 @@ public class CardDTO {
                 "\"defence\":" + defence + "," +
                 "\"attack\":" + attack + "," +
                 "\"price\":" + price + "," +
-                "\"userId\":" + userId +
+                "\"userId\":" + userId + "," +
+                "\"id\":" + id +
                 "}";
     }
 }
