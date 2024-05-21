@@ -43,7 +43,8 @@ public class UserMapper {
 
     public User toEntity(UserDTO userDTO) {
         User user = new User();
-        user.setId(userDTO.getId());
+        if (userDTO.getId() != null)
+            user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setWallet(userDTO.getWallet());

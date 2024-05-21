@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface UserService {
     List<UserDTO> getAll();
     Optional<UserDTO> getById(Long id);
+    Optional<UserDTO> create(UserDTO userDTO);
 }

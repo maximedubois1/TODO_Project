@@ -30,4 +30,11 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findById(id)
                 .map(this.userMapper::toDTO);
     }
+
+    @Override
+    public Optional<UserDTO> create(UserDTO userDTO) {
+        return Optional.of(this.userMapper.toDTO(
+                this.userRepository.save(this.userMapper.toEntity(userDTO))
+        ));
+    }
 }

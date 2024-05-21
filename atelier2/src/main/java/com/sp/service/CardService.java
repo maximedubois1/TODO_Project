@@ -3,10 +3,12 @@ package com.sp.service;
 import com.sp.model.dto.CardDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CardService {
     List<CardDTO> getAll();
-    List<CardDTO> getByUserId(Long userId); // those which belongs to a user
+    Optional<List<CardDTO>> getByUserId(Long userId); // those which belongs to a user
     List<CardDTO> getAvailableCards(); // those on marketplace
-    CardDTO getById(Long id);
+    Optional<CardDTO> getById(Long id);
+    void sell(Long id);
 }
