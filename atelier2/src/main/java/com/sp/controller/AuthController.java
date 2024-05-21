@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     @Autowired
@@ -46,7 +48,7 @@ public class AuthController {
         return goToLogin(model);
     }
 
-    @RequestMapping(value = {"/auth"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
     public String auth(Model model, AuthDTO authDTO, HttpServletResponse response) {
         Cookie cookie = authService.authenticate(authDTO);
         if (cookie != null) {
