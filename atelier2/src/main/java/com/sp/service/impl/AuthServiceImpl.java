@@ -1,16 +1,16 @@
 package com.sp.service.impl;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.sp.model.UserEntity;
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import com.sp.service.AuthService;
+import com.sp.service.CardService;
 import com.sp.service.UserService;
 import com.sp.utils.CookieUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,8 @@ public class AuthServiceImpl implements AuthService {
     UserService userService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CardService cardService;
 
     @Override
     public Cookie authenticate(AuthDTO authDTO) {
@@ -40,7 +42,8 @@ public class AuthServiceImpl implements AuthService {
 
     private boolean checkCredential(AuthDTO authDTO) {
         UserEntity user = userRepository.findBySurname(authDTO.getSurname());
-        return user != null && authDTO.getSurname().equals(user.getSurname()) && authDTO.getPassword().equals(user.getPassword());
+        return user != null && authDTO.getSurname().equals(user.getSurname()) &&
+                BCrypt.verifyer().verify(authDTO.getPassword().toCharArray(), user.getPassword()).verified;
     }
 
     @Override
@@ -65,12 +68,13 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }
-        UserEntity newUser= new UserEntity();
+        UserEntity newUser = new UserEntity();
         newUser.setSurname(authDTO.getSurname());
         newUser.setName(authDTO.getSurname());
-        newUser.setPassword(authDTO.getPassword());
+        newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+        cardService.generateFiveCardsForUser(newUser.getId());
         return authenticate(authDTO);
     }
 }
