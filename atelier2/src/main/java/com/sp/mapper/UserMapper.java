@@ -1,7 +1,7 @@
 package com.sp.mapper;
 
 import com.sp.model.Card;
-import com.sp.model.User;
+import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
 import com.sp.model.dto.UserDTO;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class UserMapper {
 
-    public UserDTO toDTO(User user) {
+    public UserDTO toDTO(UserEntity user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setName(user.getName());
@@ -41,8 +41,8 @@ public class UserMapper {
         return userDTO;
     }
 
-    public User toEntity(UserDTO userDTO) {
-        User user = new User();
+    public UserEntity toEntity(UserDTO userDTO) {
+        UserEntity user = new UserEntity();
         if (userDTO.getId() != null)
             user.setId(userDTO.getId());
         user.setName(userDTO.getName());
@@ -73,16 +73,16 @@ public class UserMapper {
         return user;
     }
 
-    public List<UserDTO> toDTOs(List<User> users) {
+    public List<UserDTO> toDTOs(List<UserEntity> users) {
         List<UserDTO> userDTOs = new ArrayList<>();
-        for (User user : users) {
+        for (UserEntity user : users) {
             userDTOs.add(toDTO(user));
         }
         return userDTOs;
     }
 
-    public List<User> toEntities(List<UserDTO> userDTOs) {
-        List<User> users = new ArrayList<>();
+    public List<UserEntity> toEntities(List<UserDTO> userDTOs) {
+        List<UserEntity> users = new ArrayList<>();
         for (UserDTO userDTO : userDTOs) {
             users.add(toEntity(userDTO));
         }
