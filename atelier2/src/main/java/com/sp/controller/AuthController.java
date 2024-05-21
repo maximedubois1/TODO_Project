@@ -5,6 +5,7 @@ import com.sp.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,9 @@ public class AuthController {
         Cookie cookie = authService.authenticate(authDTO);
         if (cookie != null) {
             response.addCookie(cookie);
-            return ResponseEntity.ok("Login successful");
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .body("Login successful");
         }
         //login fail
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
@@ -36,7 +39,9 @@ public class AuthController {
         Cookie cookie = authService.logout();
         // Ajouter le cookie à la réponse
         response.addCookie(cookie);
-        return ResponseEntity.ok("Logout successful");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body("Logout successful");
     }
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
@@ -46,7 +51,9 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
         }
         response.addCookie(cookie);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Registration successful");
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body("Registration successful");
     }
 
 
