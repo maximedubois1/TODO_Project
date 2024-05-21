@@ -1,6 +1,6 @@
 //package com.sp.controller;
 //
-//import com.sp.model.CardDTO;
+//import com.sp.model.dto.CardDTO;
 //import org.springframework.stereotype.Service;
 //
 //import java.util.ArrayList;
