@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +21,7 @@ public class AuthController {
     AuthService authService;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public ResponseEntity<String> auth(Model model, @RequestBody AuthDTO authDTO, HttpServletResponse response) {
+    public ResponseEntity<String> auth(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
         Cookie cookie = authService.authenticate(authDTO);
         if (cookie != null) {
             response.addCookie(cookie);
@@ -33,7 +32,7 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
-    public ResponseEntity<String> logout(Model model, HttpServletResponse response) {
+    public ResponseEntity<String> logout(HttpServletResponse response) {
         Cookie cookie = authService.logout();
         // Ajouter le cookie à la réponse
         response.addCookie(cookie);
@@ -41,13 +40,13 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public ResponseEntity<String> register(Model model, @RequestBody AuthDTO authDTO, HttpServletResponse response) {
+    public ResponseEntity<String> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
         Cookie cookie = authService.register(authDTO);
         if (cookie == null) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Registration successful");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
         }
         response.addCookie(cookie);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Registration successful");
     }
 
 
