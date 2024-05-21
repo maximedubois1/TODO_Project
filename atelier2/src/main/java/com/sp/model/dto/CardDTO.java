@@ -12,8 +12,12 @@ public class CardDTO {
     private int attack;
     private int defense;
     private int price;
+    private UserDTO user;
 
-    public CardDTO(Long id, String name, String description, String imageUrl, String family, String affinity, int hp, int energy, int attack, int defense, int price) {
+    public CardDTO() {
+    }
+
+    public CardDTO(Long id, String name, String description, String imageUrl, String family, String affinity, int hp, int energy, int attack, int defense, int price, UserDTO user) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -25,6 +29,7 @@ public class CardDTO {
         this.attack = attack;
         this.defense = defense;
         this.price = price;
+        this.user = user;
     }
 
     public Long getId() {
@@ -113,5 +118,13 @@ public class CardDTO {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 }

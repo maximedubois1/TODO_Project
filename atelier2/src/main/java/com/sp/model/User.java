@@ -23,7 +23,7 @@ public class User {
     private String password;
 
     @Column(name = "cards")
-    @OneToMany
+    @OneToMany(mappedBy = "userId")
     private List<Card> cards;
     
     @Column(name = "wallet", nullable = false)
@@ -71,5 +71,9 @@ public class User {
 
     public void setWallet(int wallet) {
         this.wallet = wallet;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

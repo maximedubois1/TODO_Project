@@ -6,18 +6,16 @@ public class UserDTO {
     private Long id;
     private String name;
     private String surname;
-    private String password;
     private List<CardDTO> cards;
     private int wallet;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String name, String surname, String password, List<CardDTO> cards, int wallet) {
+    public UserDTO(Long id, String name, String surname,List<CardDTO> cards, int wallet) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.password = password;
         this.cards = cards;
         this.wallet = wallet;
     }
@@ -32,10 +30,6 @@ public class UserDTO {
 
     public String getSurname() {
         return surname;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public List<CardDTO> getCards() {
@@ -56,10 +50,6 @@ public class UserDTO {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setCards(List<CardDTO> cards) {
