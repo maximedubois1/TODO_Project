@@ -43,7 +43,6 @@ function onProcess(id){
     console.log(id)
 }
 
-
 function setGame(userCardId){
     let cList=[]
     cList.push(getCardById(userCardId,cardList))

@@ -1,3 +1,4 @@
+
 function process(elt){
     
     let firstName = document.getElementsByName('first-name');
@@ -24,21 +25,4 @@ function checkPassword(password, rePassword){
     }
 }
 
-function createUser(user) {
-    fetch('http://localhost:8080/api/v1/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-        body: JSON.stringify(user),
-    })
-    // .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        window.location.href = "login.html";
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
+
