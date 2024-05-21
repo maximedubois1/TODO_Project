@@ -31,6 +31,7 @@ public class CardController {
 
     @GetMapping("/mine")
     public ResponseEntity<List<CardDTO>> getMine(HttpServletRequest request) {
+
         UserDTO user = this.authService.getLoggedUser(request);
         return ResponseEntity.ok(this.cardService.getByUserId(user.getId()).orElse(null));
     }

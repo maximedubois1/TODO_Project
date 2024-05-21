@@ -1,12 +1,27 @@
+// let user ={"username":"John","wallet":5000}
+// let user;
 
-let user ={"username":"John","wallet":5000}
-
-function setUserInfo(){
-    document.getElementById("userNameId").innerHTML= user.username;
-    document.getElementById("walletId").innerHTML= user.wallet;
+function setUserInfo(user) {
+    document.getElementById("userNameId").innerHTML = user.surname;
+    document.getElementById("walletId").innerHTML = user.wallet;
 }
 
-setUserInfo()
+async function fetchUserInfo() {
+    return fetch('http://localhost:8080/api/v1/users/profile', {
+        credentials: 'include',
+    }) // fetch logged user info
+        .then(response => response.json())
+        .then(data => {
+            user = data;
+            console.log(user)
+            return data
+        });
+}
+
+// setUserInfo()
+fetchUserInfo().then(r => setUserInfo(r))
+
+
 
 
 

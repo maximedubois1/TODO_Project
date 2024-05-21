@@ -56,6 +56,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDTO getLoggedUser(HttpServletRequest request) {
         String sessionToken = CookieUtil.getCookieValue(request, "Token");
+        System.out.println("sessionToken: " + sessionToken);
         if (sessionToken == null) {
             return null;
         } else {
