@@ -10,5 +10,7 @@ public interface CardService {
     Optional<List<CardDTO>> getByUserId(Long userId); // those which belongs to a user
     List<CardDTO> getAvailableCards(); // those on marketplace
     Optional<CardDTO> getById(Long id);
+    void generateFiveCardsForUser(Long userId);
     void sell(Long id);
+    void buy(Long userId, Long cardId);
 }
