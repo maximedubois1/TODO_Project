@@ -11,6 +11,7 @@ public class CardGeneratorImpl implements CardGenerator {
     private static final String[] nouns = {"Guardian", "Slayer", "Mage", "Beast"};
     private static final String[] adjectives = {"Mighty", "Agile", "Enchanted", "Furious"};
     private static final String[] verbs = {"protects", "attacks", "channels", "summons"};
+    private static final String[] family = {"DC Comics", "Marvel"};
 
     private static String generateCardName(String cardType) {
         return String.format("%s %s %s", adjectives[random.nextInt(adjectives.length)], cardType, nouns[random.nextInt(nouns.length)]);
@@ -22,7 +23,7 @@ public class CardGeneratorImpl implements CardGenerator {
         newCard.setName(generateCardName("gene"));
         newCard.setDescription(generateCardDescription("gene"));
         newCard.setImageUrl("path/to/image.jpg"); // TODO: Find image generate with id
-        newCard.setFamily("Random Family");
+        newCard.setFamily(family[random.nextInt(family.length)]);
         newCard.setAffinity("Random Affinity");
         newCard.setHp((int) (Math.random() * 100) + 1); // Random HP between 1 and 100
         newCard.setEnergy((int) (Math.random() * 50) + 1); // Random Energy between 1 and 50
