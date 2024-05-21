@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
                 this.userRepository.save(this.userMapper.toEntity(userDTO))
         ));
     }
+
+    @Override
+    public UserDTO getBySurname(String surname) {
+        return this.userMapper.toDTO(this.userRepository.findBySurname(surname));
+    }
 }

@@ -1,16 +1,15 @@
 package com.sp.model;
 
 import jakarta.persistence.*;
-import jdk.dynalink.linker.LinkerServices;
 
 import java.util.List;
 
-@Table(name = "user")
+@Table(name = "users")
 @Entity
-public class User {
+public class UserEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -23,7 +22,7 @@ public class User {
     private String password;
 
     @Column(name = "cards")
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private List<Card> cards;
     
     @Column(name = "wallet", nullable = false)

@@ -2,9 +2,11 @@ package com.sp.service.impl;
 
 import com.sp.model.Card;
 import com.sp.service.CardGenerator;
+import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
+@Service
 public class CardGeneratorImpl implements CardGenerator {
 
     private static final Random random = new Random();
