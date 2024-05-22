@@ -1,5 +1,5 @@
 
-let user ={"username":"John","wallet":5000}
+// let user ={"username":"John","wallet":5000}
 let roomList = [
         {
             id:1,
@@ -56,7 +56,7 @@ function onProcessGame(obj){
 }
 
 
-function setUserInfo(){
+function setUserInfo(user){
     document.getElementById("userNameId").innerHTML= user.surname;
     document.getElementById("walletId").innerHTML= user.wallet;
 }
@@ -65,7 +65,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const userCardId = urlParams.get('id');
 
-setUserInfo()
+fetchUserInfo().then(r => setUserInfo(r))
 setTemplateRoom("#roomlist","#roomContent",roomList)
 
 
