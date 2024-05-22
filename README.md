@@ -1,6 +1,6 @@
 MAILHEBIAU Damien, LAPETITE Mathieu, GRANDHOMME Jean-baptiste, DUBOIS Maxime
 
-# Atelier 1
+# Atelier 1 - Dans le dossier atelier 1
 
 ## Static : 
 
@@ -45,7 +45,7 @@ Les vues sont réalisées en thymeleaf.
 
 **viewCard.html** : Page d'affichage de card
 
-# Atelier 2
+# Atelier 2 - Backend : dossier atelier 2 / Frontend : dossier full-front
 
 ## Back :
 Pour chaque partie, nous avons créé un controller, un service et un repository.
