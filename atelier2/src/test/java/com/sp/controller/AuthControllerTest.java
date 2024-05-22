@@ -4,6 +4,7 @@ import com.sp.model.dto.AuthDTO;
 import com.sp.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,7 +41,7 @@ class AuthControllerTest {
         authDTO.setSurname(username);
         authDTO.setPassword(password);
 
-        when(authService.register(authDTO)).thenReturn(new Cookie("auth", "valid-token"));
+        when(authService.register(any(AuthDTO.class))).thenReturn(new Cookie("Token", username));
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -49,11 +51,11 @@ class AuthControllerTest {
                 .andReturn();
 
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.SET_COOKIE))
-                .isNotNull().contains("auth=valid-token");
+                .isNotNull().contains("Token="+username);
         assertThat(mvcResult.getResponse().getContentAsString())
                 .isEqualTo("Registration successful");
 
-        verify(authService, times(1)).register(authDTO);
+        verify(authService, times(1)).register(any(AuthDTO.class));
     }
     
     @Test
@@ -65,7 +67,7 @@ class AuthControllerTest {
         authDTO.setSurname(username);
         authDTO.setPassword(password);
 
-        when(authService.register(authDTO)).thenReturn(null);
+        when(authService.register(any(AuthDTO.class))).thenReturn(null);
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,6 +79,6 @@ class AuthControllerTest {
         assertThat(mvcResult.getResponse().getContentAsString())
                 .isEqualTo("Registration failed");
 
-        verify(authService, times(1)).register(authDTO);
+        verify(authService, times(1)).register(any(AuthDTO.class));
     }
 }

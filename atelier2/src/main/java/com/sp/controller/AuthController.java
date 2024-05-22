@@ -51,8 +51,9 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
         }
         response.addCookie(cookie);
+        String cookieValue = String.format("%s=%s; Max-Age=%s", cookie.getName(), cookie.getValue(), cookie.getMaxAge());
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, cookieValue)
                 .body("Registration successful");
     }
 
