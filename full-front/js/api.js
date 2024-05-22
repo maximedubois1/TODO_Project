@@ -63,7 +63,7 @@ async function authUser(data) {
 async function sellCard(id) {
     console.log(id)
     return fetch(`${URL}/cards/${id}/sell`, {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -82,7 +82,7 @@ async function sellCard(id) {
 async function buyCard(id) {
     console.log(id)
     return fetch(`${URL}/cards/${id}/buy`, {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },

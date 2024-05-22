@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jmx.export.annotation.ManagedOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +45,7 @@ public class CardController {
         return ResponseEntity.ok(this.cardService.getAvailableCards());
     }
 
-    @GetMapping("/{id}/sell")
+    @PostMapping("/{id}/sell")
     public ResponseEntity<CardDTO> sellCardsToMarket(HttpServletRequest request, @PathVariable long id) {
         UserDTO user = this.authService.getLoggedUser(request);
         return switch (this.marketService.sell(user.getId(), id)) {
@@ -59,7 +56,7 @@ public class CardController {
         };
     }
 
-    @GetMapping("/{id}/buy")
+    @PostMapping("/{id}/buy")
     public ResponseEntity<CardDTO> buyCardsToMarket(HttpServletRequest request, @PathVariable Long id) {
         UserDTO user = this.authService.getLoggedUser(request);
         return switch (this.marketService.buy(user.getId(), id)) {
