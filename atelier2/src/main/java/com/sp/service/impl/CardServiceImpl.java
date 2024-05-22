@@ -64,16 +64,11 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void sell(Long id) {
-        Card card = this.cardRepository.findById(id).orElseThrow();
-        card.setUserId(null);
+    public void setOwner(Long userid, CardDTO carddto) {
+        Card card = cardMapper.toEntity(carddto);
+        card.setUserId(userid);
         this.cardRepository.save(card);
     }
 
-    @Override
-    public void buy(Long userId, Long cardId) {
-        Card card = this.cardRepository.findById(cardId).orElseThrow();
-        card.setUserId(userId);
-        this.cardRepository.save(card);
-    }
+
 }
