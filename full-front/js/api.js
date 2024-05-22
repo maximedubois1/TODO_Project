@@ -70,6 +70,8 @@ async function sellCard(id) {
         credentials: 'include',
     }).then(response => {
         if (response.ok) {
+            fetchUserCards().then(r => setCardlist(r))
+            window.location.reload()
             return response.json()
         } else {
             alert("Error selling card")
@@ -77,7 +79,7 @@ async function sellCard(id) {
     })
 }
 
-function buyCard(id) {
+async function buyCard(id) {
     console.log(id)
     return fetch(`${URL}/cards/${id}/buy`, {
         method: 'GET',
@@ -87,9 +89,22 @@ function buyCard(id) {
         credentials: 'include',
     }).then(response => {
         if (response.ok) {
+            fetchAvailableCards().then(r => setCardlist(r))
+            window.location.reload()
             return response.json()
         } else {
             alert("Error selling card")
         }
     })
+}
+
+async function fetchAvailableCards() {
+    return fetch(`${URL}/cards/market`, {
+        credentials: 'include',
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            return data
+        })
 }

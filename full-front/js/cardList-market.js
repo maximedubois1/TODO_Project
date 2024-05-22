@@ -1,9 +1,3 @@
-
-
-
-
-
-
 function setCardlist(cardList) {
     setTemplate("#cardlist", "#tableContent", cardList)
 }
@@ -15,7 +9,13 @@ function setUserInfo(user) {
     document.getElementById("walletId").innerHTML = user.wallet;
 }
 
-fetchUserCards().then(r => setCardlist(r))
+
+if (window.location.href.includes("buy")) {
+    fetchAvailableCards().then(r => setCardlist(r))
+} else {
+    fetchUserCards().then(r => setCardlist(r))
+}
+
 fetchUserInfo().then(r => setUserInfo(r))
 
 
