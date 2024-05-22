@@ -34,7 +34,7 @@ async function createUser(user) {
         // .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            window.location.href = "login.html";
+            window.location.href = "loginUser.html";
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -70,7 +70,7 @@ async function sellCard(id) {
         credentials: 'include',
     }).then(response => {
         if (response.ok) {
-            fetchUserCards().then(r => setCardlist(r))
+            // fetchUserCards().then(r => setCardlist(r))
             window.location.reload()
             return response.json()
         } else {
@@ -89,11 +89,11 @@ async function buyCard(id) {
         credentials: 'include',
     }).then(response => {
         if (response.ok) {
-            fetchAvailableCards().then(r => setCardlist(r))
+            // fetchAvailableCards().then(r => setCardlist(r))
             window.location.reload()
             return response.json()
         } else {
-            alert("Error selling card")
+            alert("Error buy card")
         }
     })
 }
