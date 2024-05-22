@@ -1,6 +1,7 @@
 package com.sp.service;
 
 import com.sp.model.dto.AuthDTO;
+import com.sp.model.dto.JwtResponseDTO;
 import com.sp.model.dto.UserDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ public interface AuthService {
      * @param authDTO the AuthDTO object containing the authentication details of the user.
      * @return a Cookie object containing the session details if the authentication was successful.
      */
-    Cookie authenticate(AuthDTO authDTO);
+    JwtResponseDTO authenticate(AuthDTO authDTO);
 
     /**
      * Logs out the currently logged in user.
@@ -39,5 +40,5 @@ public interface AuthService {
      * @param authDTO the AuthDTO object containing the registration details of the user.
      * @return a Cookie object containing the session details if the registration was successful.
      */
-    Cookie register(AuthDTO authDTO);
+    JwtResponseDTO register(AuthDTO authDTO);
 }

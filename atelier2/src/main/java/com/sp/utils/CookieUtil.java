@@ -21,4 +21,13 @@ public class CookieUtil {
         }
         return null; // Retourne null si le cookie n'existe pas
     }
+
+    public static Cookie createCookie(String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(6 * 24 * 60 * 60);
+        return cookie;
+    }
 }

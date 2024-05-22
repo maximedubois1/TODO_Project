@@ -3,41 +3,46 @@ package com.sp.service.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.sp.model.UserEntity;
 import com.sp.model.dto.AuthDTO;
+import com.sp.model.dto.JwtResponseDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import com.sp.service.AuthService;
 import com.sp.service.CardService;
 import com.sp.service.UserService;
 import com.sp.utils.CookieUtil;
+import com.sp.utils.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CardService cardService;
+    private final UserService userService;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
+    private final CardService cardService;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository, CardService cardService, AuthenticationManager authenticationManager) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.userRepository = userRepository;
+        this.cardService = cardService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
-    public Cookie authenticate(AuthDTO authDTO) {
-
-        if (checkCredential(authDTO)) {
-            String token = authDTO.getSurname();
-
-            Cookie cookie = new Cookie("Token", token);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            cookie.setMaxAge(6 * 24 * 60 * 60);
-            return cookie;
-        }
-        return null;
+    public JwtResponseDTO authenticate(AuthDTO authDTO) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getUsername(), authDTO.getPassword()));
+        if (authentication.isAuthenticated())
+            return new JwtResponseDTO.Builder().withAccessToken(jwtService.generateToken(authDTO.getUsername())).build();
+        else
+            return null;
     }
 
     private boolean checkCredential(AuthDTO authDTO) {
@@ -65,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public Cookie register(AuthDTO authDTO) {
+    public JwtResponseDTO register(AuthDTO authDTO) {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }

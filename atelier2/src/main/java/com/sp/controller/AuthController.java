@@ -1,43 +1,42 @@
 package com.sp.controller;
 
 import com.sp.model.dto.AuthDTO;
+import com.sp.model.dto.JwtResponseDTO;
 import com.sp.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    @Autowired
-    AuthService authService;
+    private final AuthService authService;
 
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    @PostMapping("/login")
     public ResponseEntity<String> auth(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
-        Cookie cookie = authService.authenticate(authDTO);
-        if (cookie != null) {
-            response.addCookie(cookie);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                    .body("Login successful");
+        JwtResponseDTO jwt = authService.authenticate(authDTO);
+        if (jwt == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
-        //login fail
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+
+        String token = jwt.getAccessToken();
+        Cookie jwtCookie = new Cookie("auth_jwt", token);
+        response.addCookie(jwtCookie);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
     }
 
     @RequestMapping(value = {"/logout"}, method = RequestMethod.GET)
     public ResponseEntity<String> logout(HttpServletResponse response) {
         Cookie cookie = authService.logout();
-        // Ajouter le cookie à la réponse
         response.addCookie(cookie);
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
@@ -46,15 +45,16 @@ public class AuthController {
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public ResponseEntity<String> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
-        Cookie cookie = authService.register(authDTO);
-        if (cookie == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
-        }
-        response.addCookie(cookie);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body("Registration successful");
-    }
+        JwtResponseDTO jwt = authService.register(authDTO);
 
+        if (jwt == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        }
+
+        String token = jwt.getAccessToken();
+        Cookie jwtCookie = new Cookie("auth_jwt", token);
+        response.addCookie(jwtCookie);
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
+    }
 
 }
