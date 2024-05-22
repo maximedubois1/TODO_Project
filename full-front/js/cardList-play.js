@@ -58,7 +58,7 @@ function setGame(userCardId){
 
 
 function setUserInfo(){
-    document.getElementById("userNameId").innerHTML= user.username;
+    document.getElementById("userNameId").innerHTML= user.surname;
     document.getElementById("walletId").innerHTML= user.wallet;
 }
 

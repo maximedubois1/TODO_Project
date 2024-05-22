@@ -11,7 +11,7 @@ function setCardlist(cardList) {
 
 function setUserInfo(user) {
     console.log(user)
-    document.getElementById("userNameId").innerHTML = user.username;
+    document.getElementById("userNameId").innerHTML = user.surname;
     document.getElementById("walletId").innerHTML = user.wallet;
 }
 

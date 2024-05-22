@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public Cookie authenticate(AuthDTO authDTO) {
 
         if (checkCredential(authDTO)) {
-            String token = authDTO.getSurname(); // Vous pouvez générer un vrai token ici
+            String token = authDTO.getSurname();
 
             Cookie cookie = new Cookie("Token", token);
             cookie.setHttpOnly(true);

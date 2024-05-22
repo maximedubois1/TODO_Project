@@ -21,8 +21,8 @@ function setTemplate(idTemplate,idContainer,cList){
 
         newContent= clone.firstElementChild.innerHTML
                     .replace(/{{family_src}}/g, card.family_src)
-                    .replace(/{{family_name}}/g, card.family_name)
-                    .replace(/{{img_src}}/g, card.img_src)
+                    .replace(/{{family_name}}/g, card.family)
+                    .replace(/{{img_src}}/g, card.imageUrl)
                     .replace(/{{name}}/g, card.name)
                     .replace(/{{description}}/g, card.description)
                     .replace(/{{hp}}/g, card.hp)
