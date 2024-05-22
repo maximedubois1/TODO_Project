@@ -1,3 +1,5 @@
+MAILHEBIAU Damien, LAPETITE Mathieu, GRANDHOMME Jean-baptiste, DUBOIS Maxime
+
 # Atelier 1
 
 ## Static : 
@@ -43,3 +45,32 @@ Les vues sont réalisées en thymeleaf.
 
 **viewCard.html** : Page d'affichage de card
 
+# Atelier 2
+
+## Back :
+Pour chaque partie, nous avons créé un controller, un service et un repository.
+La base de données est une base postgresql, initié grâce à Hibernate.
+Nous avons créé des Entités pour la partie base de données et des DTO pour la partie service et transfert de données.
+
+
+### Authentification
+- Création d'un utilisateur
+- Connexion d'un utilisateur (Avec gestion de token)
+- Déconnexion d'un utilisateur
+- Récupération de l'utilisateur connecté
+
+### User 
+- Création d'un utilisateur
+- 
+### Card
+- Création d'une card
+- Récupération de toutes les cards
+- Récupération de toutes les cards d'un utilisateurs
+- Récupération d'une card par son id
+
+### Market
+- Vente d'une carte
+- Achat d'une carte
+
+## Front : 
+- Modification du front fourni
