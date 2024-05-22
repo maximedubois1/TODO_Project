@@ -44,8 +44,15 @@ public interface CardService {
     /**
      * Generates five cards for a specific user.
      *
-     * @param userId the ID of the user.
+     * @param user the user for whom the cards are generated.
      */
     void generateFiveCardsForUser(UserEntity user);
+
+    /**
+     * Sets the owner of a card.
+     *
+     * @param userId the ID of the user who will be the owner of the card.
+     * @param carddto the CardDTO object that will have its owner set.
+     */
     void setOwner(Long userId, CardDTO carddto);
 }

@@ -40,5 +40,12 @@ public interface UserService {
      * @return an Optional containing the created UserDTO object if the creation was successful, or an empty Optional if the creation was unsuccessful.
      */
     Optional<UserDTO> create(UserDTO userDTO);
+
+    /**
+     * Updates a user.
+     *
+     * @param userDTO the UserDTO object containing the details of the user to be updated.
+     * @return an Optional containing the updated UserDTO object if the update was successful, or an empty Optional if the update was unsuccessful.
+     */
     Optional<UserDTO> update(UserDTO userDTO);
 }
