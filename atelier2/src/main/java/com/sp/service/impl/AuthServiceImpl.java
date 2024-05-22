@@ -75,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
         newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
         newUser = userRepository.save(newUser);
-        cardService.generateFiveCardsForUser(newUser.getId());
+        cardService.generateFiveCardsForUser(newUser);
         return authenticate(authDTO);
     }
 }

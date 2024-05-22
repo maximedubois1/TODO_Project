@@ -3,6 +3,7 @@ package com.sp.service.impl;
 import com.sp.mapper.CardMapper;
 import com.sp.mapper.UserMapper;
 import com.sp.model.Card;
+import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.CardRepository;
@@ -58,10 +59,10 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void generateFiveCardsForUser(Long userId) {
+    public void generateFiveCardsForUser(UserEntity user) {
         for (int i = 0; i < 5; i++) {
             Card card = this.cardGenerator.generateNewCard();
-            card.setUser(this.userMapper.toEntity(this.userService.getById(userId).orElseThrow()));
+            card.setUser(user);
             this.cardRepository.save(card);
         }
     }

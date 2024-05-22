@@ -28,23 +28,25 @@ public class UserMapper {
         userDTO.setWallet(user.getWallet());
 
         List<CardDTO> cardDTOList = new ArrayList<>();
-        for (Card card : user.getCards()) {
-            CardDTO cardDTO = new CardDTO();
-            cardDTO.setId(card.getId());
-            cardDTO.setName(card.getName());
-            cardDTO.setDescription(card.getDescription());
-            cardDTO.setImageUrl(card.getImageUrl());
-            cardDTO.setFamily(card.getFamily());
-            cardDTO.setAffinity(card.getAffinity());
-            cardDTO.setHp(card.getHp());
-            cardDTO.setEnergy(card.getEnergy());
-            cardDTO.setAttack(card.getAttack());
-            cardDTO.setDefense(card.getDefense());
-            cardDTO.setPrice(card.getPrice());
+        if (user.getCards() != null) {
+            for (Card card : user.getCards()) {
+                CardDTO cardDTO = new CardDTO();
+                cardDTO.setId(card.getId());
+                cardDTO.setName(card.getName());
+                cardDTO.setDescription(card.getDescription());
+                cardDTO.setImageUrl(card.getImageUrl());
+                cardDTO.setFamily(card.getFamily());
+                cardDTO.setAffinity(card.getAffinity());
+                cardDTO.setHp(card.getHp());
+                cardDTO.setEnergy(card.getEnergy());
+                cardDTO.setAttack(card.getAttack());
+                cardDTO.setDefense(card.getDefense());
+                cardDTO.setPrice(card.getPrice());
 
-            cardDTOList.add(cardDTO);
+                cardDTOList.add(cardDTO);
+            }
+            userDTO.setCards(cardDTOList);
         }
-        userDTO.setCards(cardDTOList);
 
         return userDTO;
     }
@@ -61,27 +63,30 @@ public class UserMapper {
         userEnt.ifPresent(userEntity -> user.setPassword(userEntity.getPassword()));
 
         List<Card> cardList = new ArrayList<>();
-        for (CardDTO cardDTO : userDTO.getCards()) {
-            Card card = new Card();
-            card.setId(cardDTO.getId());
-            card.setName(cardDTO.getName());
-            card.setDescription(cardDTO.getDescription());
-            card.setImageUrl(cardDTO.getImageUrl());
-            card.setFamily(cardDTO.getFamily());
-            card.setAffinity(cardDTO.getAffinity());
-            card.setHp(cardDTO.getHp());
-            card.setEnergy(cardDTO.getEnergy());
-            card.setAttack(cardDTO.getAttack());
-            card.setDefense(cardDTO.getDefense());
-            card.setPrice(cardDTO.getPrice());
-            //if (cardDTO.getUser() != null)
+        if (userDTO.getCards() != null) {
+            for (CardDTO cardDTO : userDTO.getCards()) {
+                Card card = new Card();
+                card.setId(cardDTO.getId());
+                card.setName(cardDTO.getName());
+                card.setDescription(cardDTO.getDescription());
+                card.setImageUrl(cardDTO.getImageUrl());
+                card.setFamily(cardDTO.getFamily());
+                card.setAffinity(cardDTO.getAffinity());
+                card.setHp(cardDTO.getHp());
+                card.setEnergy(cardDTO.getEnergy());
+                card.setAttack(cardDTO.getAttack());
+                card.setDefense(cardDTO.getDefense());
+                card.setPrice(cardDTO.getPrice());
+                //if (cardDTO.getUser() != null)
                 //card.setUserId(null);
                 //card.setUserId(cardDTO.getUser()); TODO : Temp remove for debug
-            //else
-            card.setUser(user);
+                //else
+                card.setUser(user);
 
-            cardList.add(card);
+                cardList.add(card);
+            }
         }
+
         user.setCards(cardList);
 
         return user;

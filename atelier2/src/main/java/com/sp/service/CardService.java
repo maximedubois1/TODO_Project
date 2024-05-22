@@ -1,5 +1,6 @@
 package com.sp.service;
 
+import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
 
 import java.util.List;
@@ -45,6 +46,6 @@ public interface CardService {
      *
      * @param userId the ID of the user.
      */
-    void generateFiveCardsForUser(Long userId);
+    void generateFiveCardsForUser(UserEntity user);
     void setOwner(Long userId, CardDTO carddto);
 }

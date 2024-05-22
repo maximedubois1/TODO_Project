@@ -24,7 +24,7 @@ public class CardGeneratorImpl implements CardGenerator {
         // Set random values for most properties (assuming these are game stats)
         newCard.setName(generateCardName("gene"));
         newCard.setDescription(generateCardDescription("gene"));
-        newCard.setImageUrl("https://imgs.search.brave.com/ukPKPkDOoUVuy0C7TQhJFGDY9DK5yrl2Zm1GrLj2xFY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vcGhvdG9z/L2phdmFzY3JpcHQt/Y29kZS1jb21wdXRl/ci1sYW5ndWFnZS1w/cm9ncmFtbWluZy1p/bnRlcm5ldC10ZXh0/LWVkaXRvci1waWN0/dXJlLWlkMTE1Njgz/NzY1MD9iPTEmaz0y/MCZtPTExNTY4Mzc2/NTAmcz0xNzA2Njdh/Jnc9MCZoPWZuSFdq/QkpWY2pyd0UzUGot/SEpQaTBkMWJCNXFa/WTJUSUVMbXdYU2lt/ZEU9"); // TODO: Find image generate with id
+        newCard.setImageUrl("https://cdn.pixabay.com/photo/2019/10/13/20/35/orange-4547207_1280.png"); // TODO: Find image generate with id
         newCard.setFamily(family[random.nextInt(family.length)]);
         newCard.setAffinity("Random Affinity");
         newCard.setHp((int) (Math.random() * 100) + 1); // Random HP between 1 and 100
