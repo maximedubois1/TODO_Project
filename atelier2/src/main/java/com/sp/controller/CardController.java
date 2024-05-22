@@ -59,6 +59,14 @@ public class CardController {
         };
     }
 
+    /**
+     * Buy cards from the marketplace.
+     *
+     * @param request the HttpServletRequest object containing the request details.
+     * @param id the ID of the card to be bought.
+     * @return a ResponseEntity object containing the CardDTO object if the card was successfully bought,
+     *         or a ResponseEntity object with a status code indicating the error.
+     */
     @GetMapping("/{id}/buy")
     public ResponseEntity<CardDTO> buyCardsToMarket(HttpServletRequest request, @PathVariable Long id) {
         UserDTO user = this.authService.getLoggedUser(request);
