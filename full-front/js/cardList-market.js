@@ -1,7 +1,7 @@
 
-function onProcess(id) {
-    console.log(id)
-}
+
+
+
 
 
 function setCardlist(cardList) {

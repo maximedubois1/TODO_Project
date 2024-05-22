@@ -17,7 +17,7 @@ public class Card {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "imageUrl")
+    @Column(name = "image_url")
     private String imageUrl;
 
     @Column(name = "family")
@@ -41,8 +41,9 @@ public class Card {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "userId")
-    private Long userId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     public Long getId() {
         return id;
@@ -132,11 +133,11 @@ public class Card {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }

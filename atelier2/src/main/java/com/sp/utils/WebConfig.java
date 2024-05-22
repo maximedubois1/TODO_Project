@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowedOrigins("http://localhost:3000", "http://localhost:63343")
-                .allowCredentials(true); // If you need to allow credentials like cookies
+                .allowCredentials(true);
     }
 
     @Bean

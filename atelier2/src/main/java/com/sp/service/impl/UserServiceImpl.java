@@ -39,6 +39,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> update(UserDTO userDTO) {
+        return Optional.of(this.userMapper.toDTO(
+                this.userRepository.save(this.userMapper.toEntity(userDTO))
+        ));
+    }
+
+    @Override
     public UserDTO getBySurname(String surname) {
         return this.userMapper.toDTO(this.userRepository.findBySurname(surname));
     }

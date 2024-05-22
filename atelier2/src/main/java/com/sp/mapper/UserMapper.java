@@ -4,13 +4,21 @@ import com.sp.model.Card;
 import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
 import com.sp.model.dto.UserDTO;
+import com.sp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserMapper {
+
+    private final UserRepository userRepository;
+
+    public UserMapper(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UserDTO toDTO(UserEntity user) {
         UserDTO userDTO = new UserDTO();
@@ -42,12 +50,15 @@ public class UserMapper {
     }
 
     public UserEntity toEntity(UserDTO userDTO) {
+        Optional<UserEntity> userEnt = this.userRepository.findById(userDTO.getId());
+
         UserEntity user = new UserEntity();
         if (userDTO.getId() != null)
             user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setSurname(userDTO.getSurname());
         user.setWallet(userDTO.getWallet());
+        userEnt.ifPresent(userEntity -> user.setPassword(userEntity.getPassword()));
 
         List<Card> cardList = new ArrayList<>();
         for (CardDTO cardDTO : userDTO.getCards()) {
@@ -63,8 +74,11 @@ public class UserMapper {
             card.setAttack(cardDTO.getAttack());
             card.setDefense(cardDTO.getDefense());
             card.setPrice(cardDTO.getPrice());
-            if (cardDTO.getUser() != null)
-                card.setUserId(cardDTO.getUser().getId());
+            //if (cardDTO.getUser() != null)
+                //card.setUserId(null);
+                //card.setUserId(cardDTO.getUser()); TODO : Temp remove for debug
+            //else
+            card.setUser(user);
 
             cardList.add(card);
         }

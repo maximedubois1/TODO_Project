@@ -1,3 +1,5 @@
+const URL = 'http://localhost:8080/api/v1';
+
 async function fetchUserCards() {
     return fetch('http://localhost:8080/api/v1/cards/mine', {
         credentials: 'include',
@@ -56,4 +58,38 @@ async function authUser(data) {
         .catch((error) => {
             console.error('Error:', error);
         });
+}
+
+async function sellCard(id) {
+    console.log(id)
+    return fetch(`${URL}/cards/${id}/sell`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            alert("Error selling card")
+        }
+    })
+}
+
+function buyCard(id) {
+    console.log(id)
+    return fetch(`${URL}/cards/${id}/buy`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    }).then(response => {
+        if (response.ok) {
+            return response.json()
+        } else {
+            alert("Error selling card")
+        }
+    })
 }
