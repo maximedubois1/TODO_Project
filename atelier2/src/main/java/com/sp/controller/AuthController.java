@@ -3,6 +3,7 @@ package com.sp.controller;
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.JwtResponseDTO;
 import com.sp.service.AuthService;
+import com.sp.utils.CookieUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +30,7 @@ public class AuthController {
         }
 
         String token = jwt.getAccessToken();
-        Cookie jwtCookie = new Cookie("auth_jwt", token);
+        Cookie jwtCookie = CookieUtil.createCookie("auth_jwt", token);
         response.addCookie(jwtCookie);
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
     }
@@ -38,6 +39,7 @@ public class AuthController {
     public ResponseEntity<String> logout(HttpServletResponse response) {
         Cookie cookie = authService.logout();
         response.addCookie(cookie);
+        System.out.println(cookie.getName() + " " + cookie.getValue() + " " + cookie.getMaxAge());
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body("Logout successful");

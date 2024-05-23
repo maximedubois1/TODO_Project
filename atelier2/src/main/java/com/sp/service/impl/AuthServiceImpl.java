@@ -53,19 +53,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Cookie logout() {
-        Cookie cookie = new Cookie("Token", null);
+        Cookie cookie = CookieUtil.createCookie("auth_jwt", null);
         cookie.setMaxAge(0);
         return cookie;
     }
 
     @Override
     public UserDTO getLoggedUser(HttpServletRequest request) {
-        String sessionToken = CookieUtil.getCookieValue(request, "Token");
-        System.out.println("sessionToken: " + sessionToken);
-        if (sessionToken == null) {
+        String jwtToken = CookieUtil.getCookieValue(request, "auth_jwt");
+        String username = jwtService.extractUsername(jwtToken);
+        if (jwtToken == null) {
             return null;
         } else {
-            return userService.getBySurname(sessionToken);
+            return userService.getBySurname(username);
         }
     }
 

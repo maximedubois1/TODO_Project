@@ -108,3 +108,16 @@ async function fetchAvailableCards() {
             return data
         })
 }
+
+async function logout() {
+    fetch(`${URL}/auth/logout`, {
+        method: 'GET',
+        credentials: 'include',
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = "loginUser.html";
+        } else {
+            alert("Error logout")
+        }
+    })
+}
