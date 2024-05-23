@@ -61,3 +61,4 @@ function setTemplateRoom(idTemplate, idContainer, rList) {
         roomContainer.appendChild(clone);
     }
 }
+
