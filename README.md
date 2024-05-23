@@ -60,9 +60,9 @@ L'accès à la base de données est fait grâce à des repositories.
 
 ### Authentification
 - Création d'un utilisateur
-- Connexion d'un utilisateur (Avec gestion de token : ici, nous ne passons que le surname non hashé par soucis de simplicité, cependant il serait préférable de passer un token JWT)
+- Connexion d'un utilisateur -> authentification par un token JWT
 - Déconnexion d'un utilisateur
-- Récupération de l'utilisateur connecté
+- Récupération de l'utilisateur connecté -> grâce au payload du token JWT
 
 ### User
 - Création d'un utilisateur
