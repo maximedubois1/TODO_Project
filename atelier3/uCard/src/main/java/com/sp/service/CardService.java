@@ -43,9 +43,10 @@ public interface CardService {
     /**
      * Generates five cards.
      *
+     * @param userId the ID of the user who will own the cards.
      * @return a list of five CardDTO objects.
      */
-    List<CardDTO> generateFiveCards();
+    List<CardDTO> generateFiveCards(Long userId);
 
     /**
      * Sets the owner of a card.

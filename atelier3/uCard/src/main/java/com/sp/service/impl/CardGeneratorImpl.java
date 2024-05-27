@@ -19,9 +19,8 @@ public class CardGeneratorImpl implements CardGenerator {
         return String.format("%s %s %s", adjectives[random.nextInt(adjectives.length)], cardType, nouns[random.nextInt(nouns.length)]);
     }
 
-    public Card generateNewCard() { //TODO: Add user id to the card
+    public Card generateNewCardForUser(Long userId) { //TODO: Add user id to the card
         Card newCard = new Card();
-        // Set random values for most properties (assuming these are game stats)
         newCard.setName(generateCardName("gene"));
         newCard.setDescription(generateCardDescription("gene"));
         newCard.setImageUrl("https://cdn.pixabay.com/photo/2019/10/13/20/35/orange-4547207_1280.png"); // TODO: Find image generate with id
@@ -32,8 +31,7 @@ public class CardGeneratorImpl implements CardGenerator {
         newCard.setAttack((int) (Math.random() * 80) + 1); // Random Attack between 1 and 80
         newCard.setDefense((int) (Math.random() * 80) + 1); // Random Defense between 1 and 80
         newCard.setPrice((int) (Math.random() * 1000) + 1); // Random Price between 1 and 1000
-        // You can set userId based on your logic (e.g., logged in user)
-        //newCard.setUserId(1L); // Replace with actual user ID
+        newCard.setUserId(userId);
         return newCard;
     }
 

@@ -12,5 +12,5 @@ public interface CardGenerator {
      *
      * @return a Card object.
      */
-    Card generateNewCard();
+    Card generateNewCardForUser(Long userId);
 }

@@ -55,14 +55,14 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public List<CardDTO> generateFiveCards() {
-        List<CardDTO> cards = new ArrayList<>();
+    public List<CardDTO> generateFiveCards(Long userId) {
+        List<Card> cards = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Card card = this.cardGenerator.generateNewCard();
-            cards.add(this.cardMapper.toDTO(card));
+            Card card = this.cardGenerator.generateNewCardForUser(userId);
             this.cardRepository.save(card);
+            cards.add(card);
         }
-        return cards;
+        return cardMapper.toDTOs(cards);
     }
 
     @Override

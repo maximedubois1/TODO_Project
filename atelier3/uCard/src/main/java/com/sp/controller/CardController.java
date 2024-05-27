@@ -40,7 +40,7 @@ public class CardController {
 
     @GetMapping("/is-sellable/{id}")
     public ResponseEntity<Boolean> isSellable(@PathVariable Long id) {
-        return ResponseEntity.ok(!this.cardService.hasOwner(id));
+        return ResponseEntity.ok(this.cardService.hasOwner(id));
     }
 
     @GetMapping("/is-buyable/{id}")
@@ -62,7 +62,7 @@ public class CardController {
 
     @PostMapping("/generate-for/{userId}")
     public ResponseEntity<List<CardDTO>> generateFiveCardsForUser(@PathVariable Long userId) {
-        List<CardDTO> cards = this.cardService.generateFiveCards();
+        List<CardDTO> cards = this.cardService.generateFiveCards(userId);
         for (CardDTO card : cards) {
             this.cardService.setOwner(userId, card.getId());
         }
