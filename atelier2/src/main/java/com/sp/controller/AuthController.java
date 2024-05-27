@@ -26,8 +26,9 @@ public class AuthController {
         Cookie cookie = authService.authenticate(authDTO);
         if (cookie != null) {
             response.addCookie(cookie);
+            String cookieValue = String.format("%s=%s; Max-Age=%s", cookie.getName(), cookie.getValue(), cookie.getMaxAge());
             return ResponseEntity.ok()
-                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .header(HttpHeaders.SET_COOKIE, cookieValue)
                     .body("Login successful");
         }
         //login fail
@@ -39,8 +40,9 @@ public class AuthController {
         Cookie cookie = authService.logout();
         // Ajouter le cookie à la réponse
         response.addCookie(cookie);
+        String cookieValue = String.format("%s=%s; Max-Age=%s", cookie.getName(), cookie.getValue(), cookie.getMaxAge());
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .header(HttpHeaders.SET_COOKIE, cookieValue)
                 .body("Logout successful");
     }
 
