@@ -7,13 +7,11 @@ import com.sp.model.dto.JwtResponseDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import com.sp.service.AuthService;
-import com.sp.service.CardService;
 import com.sp.service.UserService;
 import com.sp.utils.CookieUtil;
 import com.sp.utils.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,14 +23,12 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private final CardService cardService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository, CardService cardService, AuthenticationManager authenticationManager) {
+    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
-        this.cardService = cardService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -79,8 +75,7 @@ public class AuthServiceImpl implements AuthService {
         newUser.setName(authDTO.getSurname());
         newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
-        newUser = userRepository.save(newUser);
-        cardService.generateFiveCardsForUser(newUser);
+        userRepository.save(newUser);
         return authenticate(authDTO);
     }
 }

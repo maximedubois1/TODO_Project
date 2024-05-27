@@ -23,9 +23,6 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Card> cards;
-    
     @Column(name = "wallet", nullable = false)
     private int wallet;
 
@@ -37,6 +34,10 @@ public class UserEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -63,24 +64,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
     public int getWallet() {
         return wallet;
     }
 
     public void setWallet(int wallet) {
         this.wallet = wallet;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Set<UserRole> getRoles() {
