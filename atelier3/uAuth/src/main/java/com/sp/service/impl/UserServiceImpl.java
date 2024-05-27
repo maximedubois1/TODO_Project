@@ -79,6 +79,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(Long id) {
+        this.userRepository.deleteById(id);
+    }
+
+    @Override
     public UserDTO getBySurname(String surname) {
         return this.userMapper.toDTO(this.userRepository.findBySurname(surname));
     }
