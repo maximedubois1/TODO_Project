@@ -52,4 +52,10 @@ public class UserController  {
     public ResponseEntity<Boolean> subWallet(@PathVariable String id, @PathVariable String amount) {
         return ResponseEntity.ok(this.userService.subWallet((long) Integer.parseInt(id), Integer.parseInt(amount)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        this.userService.delete((long) Integer.parseInt(id));
+        return ResponseEntity.noContent().build();
+    }
 }

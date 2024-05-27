@@ -74,4 +74,11 @@ public interface UserService {
      * @return a boolean indicating whether the operation was successful.
      */
     boolean subWallet(long id, int amount);
+
+    /**
+     * Deletes a user by its ID.
+     *
+     * @param id the ID of the user.
+     */
+    void delete(Long id);
 }
