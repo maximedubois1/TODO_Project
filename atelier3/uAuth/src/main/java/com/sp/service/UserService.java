@@ -48,4 +48,30 @@ public interface UserService {
      * @return an Optional containing the updated UserDTO object if the update was successful, or an empty Optional if the update was unsuccessful.
      */
     Optional<UserDTO> update(UserDTO userDTO);
+
+    /**
+     * Tests the wallet of a user.
+     * @param id the ID of the user.
+     * @param amount the amount to test.
+     * @return a boolean indicating whether the wallet has enough money.
+     */
+    boolean testWallet(long id, int amount);
+
+    /**
+     * Adds an amount to the wallet of a user.
+     *
+     * @param id the ID of the user.
+     * @param amount the amount to add.
+     * @return a boolean indicating whether the operation was successful.
+     */
+    boolean addWallet(long id, int amount  );
+
+    /**
+     * Subtracts an amount from the wallet of a user.
+     *
+     * @param id the ID of the user.
+     * @param amount the amount to subtract.
+     * @return a boolean indicating whether the operation was successful.
+     */
+    boolean subWallet(long id, int amount);
 }

@@ -2,9 +2,11 @@ package com.sp.controller;
 
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.JwtResponseDTO;
+import com.sp.model.dto.UserDTO;
 import com.sp.service.AuthService;
 import com.sp.utils.CookieUtil;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -59,4 +61,12 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
     }
 
+    @RequestMapping(value = {"/isConnected"}, method = RequestMethod.POST)
+    public ResponseEntity<Long> isConnected(HttpServletRequest request) {
+        UserDTO user = authService.getLoggedUser(request);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(-1L);
+        }
+        return ResponseEntity.ok().body(user.getId());
+    }
 }
