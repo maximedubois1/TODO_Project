@@ -55,7 +55,19 @@ public interface CardService {
      */
     void setOwner(Long userId, Long cardId);
 
+    /**
+     * Checks if a card is available on the marketplace.
+     *
+     * @param id the ID of the card.
+     * @return true if the card is available on the marketplace, false otherwise.
+     */
     boolean isAvailableOnMarket(Long id);
 
+    /**
+     * Checks if a card has an owner.
+     *
+     * @param id the ID of the card.
+     * @return true if the card has an owner, false otherwise.
+     */
     boolean hasOwner(Long id);
 }
