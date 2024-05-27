@@ -73,8 +73,8 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public boolean isAvailableOnMarket(CardDTO card) {
-        return card.getUserId() == null;
+    public boolean isAvailableOnMarket(Long id) {
+        return this.cardRepository.findById(id).orElseThrow().getUserId() == null;
     }
 
     @Override

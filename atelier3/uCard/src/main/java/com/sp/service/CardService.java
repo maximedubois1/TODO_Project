@@ -55,7 +55,7 @@ public interface CardService {
      */
     void setOwner(Long userId, Long cardId);
 
-    boolean isAvailableOnMarket(CardDTO card);
+    boolean isAvailableOnMarket(Long id);
 
     boolean hasOwner(Long id);
 }

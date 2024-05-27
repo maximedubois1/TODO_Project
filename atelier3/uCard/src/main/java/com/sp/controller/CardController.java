@@ -2,7 +2,6 @@ package com.sp.controller;
 
 import com.sp.model.dto.CardDTO;
 import com.sp.service.CardService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,12 +40,12 @@ public class CardController {
 
     @GetMapping("/is-sellable/{id}")
     public ResponseEntity<Boolean> isSellable(@PathVariable Long id) {
-        return ResponseEntity.ok(this.cardService.isAvailableOnMarket(this.cardService.getById(id).orElse(null)));
+        return ResponseEntity.ok(!this.cardService.hasOwner(id));
     }
 
     @GetMapping("/is-buyable/{id}")
     public ResponseEntity<Boolean> isBuyable(@PathVariable Long id) {
-        return ResponseEntity.ok(!this.cardService.hasOwner(id));
+        return ResponseEntity.ok(this.cardService.isAvailableOnMarket(id));
     }
 
     @PostMapping("/buy/{cardId}/to-user/{userId}")
