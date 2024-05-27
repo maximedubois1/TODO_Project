@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    @Query("SELECT c FROM Card c WHERE c.user IS NULL")
-    List<Card> findAllWhereUserIsNull();
+    @Query("SELECT c FROM Card c WHERE c.userId IS NULL")
+    List<Card> findAllWhereUserIdIsNull();
+
+    List<Card> findAllByUserId(Long userId);
 }

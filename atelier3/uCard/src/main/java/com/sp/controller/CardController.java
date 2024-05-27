@@ -1,14 +1,9 @@
 package com.sp.controller;
 
 import com.sp.model.dto.CardDTO;
-import com.sp.model.dto.UserDTO;
-import com.sp.service.AuthService;
 import com.sp.service.CardService;
-import com.sp.service.MarketService;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +14,9 @@ import java.util.Optional;
 public class CardController {
 
     private final CardService cardService;
-    private final AuthService authService;
-    private final MarketService marketService;
 
-    public CardController(CardService cardService, AuthService authService, MarketService marketService) {
+    public CardController(CardService cardService) {
         this.cardService = cardService;
-        this.authService = authService;
-        this.marketService = marketService;
     }
 
     @GetMapping
@@ -33,11 +24,9 @@ public class CardController {
         return ResponseEntity.ok(this.cardService.getAll());
     }
 
-    @GetMapping("/mine")
-    public ResponseEntity<List<CardDTO>> getMine(HttpServletRequest request) {
-
-        UserDTO user = this.authService.getLoggedUser(request);
-        return ResponseEntity.ok(this.cardService.getByUserId(user.getId()).orElse(null));
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Optional<List<CardDTO>>> getMine(@PathVariable Long id) {
+        return ResponseEntity.ok(this.cardService.getByUserId(id));
     }
 
     @GetMapping("/market")
@@ -45,34 +34,40 @@ public class CardController {
         return ResponseEntity.ok(this.cardService.getAvailableCards());
     }
 
-    @PostMapping("/{id}/sell")
-    public ResponseEntity<CardDTO> sellCardsToMarket(HttpServletRequest request, @PathVariable long id) {
-        UserDTO user = this.authService.getLoggedUser(request);
-        return switch (this.marketService.sell(user.getId(), id)) {
-            case 0 -> ResponseEntity.ok(this.cardService.getById(id).orElse(null));
-            case 1 -> ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            case 2 -> ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            default -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        };
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<CardDTO>> getCardById(@PathVariable Long id) {
+        return ResponseEntity.ok(this.cardService.getById(id));
     }
 
-    @PostMapping("/{id}/buy")
-    public ResponseEntity<CardDTO> buyCardsToMarket(HttpServletRequest request, @PathVariable Long id) {
-        UserDTO user = this.authService.getLoggedUser(request);
-        return switch (this.marketService.buy(user.getId(), id)) {
-            case 0 -> ResponseEntity.ok(this.cardService.getById(id).orElse(null));
-            case 1 -> ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            case 2 -> ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            default -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        };
+    @GetMapping("/is-sellable/{id}")
+    public ResponseEntity<Boolean> isSellable(@PathVariable Long id) {
+        return ResponseEntity.ok(this.cardService.isAvailableOnMarket(this.cardService.getById(id).orElse(null)));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<CardDTO> getCardById(HttpServletRequest request, @PathVariable Long id) {
-        UserDTO user = this.authService.getLoggedUser(request);
-        if (user.getCards().stream().anyMatch(card -> card.getId().equals(id))) {
-            return ResponseEntity.ok(this.cardService.getById(id).orElse(null));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }}
+
+    @GetMapping("/is-buyable/{id}")
+    public ResponseEntity<Boolean> isBuyable(@PathVariable Long id) {
+        return ResponseEntity.ok(!this.cardService.hasOwner(id));
+    }
+
+    @PostMapping("/buy/{cardId}/to-user/{userId}")
+    public ResponseEntity<String> addCardToUser(@PathVariable Long cardId, @PathVariable Long userId) {
+        this.cardService.setOwner(userId, cardId);
+        return ResponseEntity.ok("Card added to user");
+    }
+
+    @PostMapping("/sell/{cardId}")
+    public ResponseEntity<String> removeCardFromUser(@PathVariable Long cardId) {
+        this.cardService.setOwner(null, cardId);
+        return ResponseEntity.ok("Card removed from user");
+    }
+
+    @PostMapping("/generate-for/{userId}")
+    public ResponseEntity<List<CardDTO>> generateFiveCardsForUser(@PathVariable Long userId) {
+        List<CardDTO> cards = this.cardService.generateFiveCards();
+        for (CardDTO card : cards) {
+            this.cardService.setOwner(userId, card.getId());
+        }
+        return ResponseEntity.ok(cards);
+    }
 
 }

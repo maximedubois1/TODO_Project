@@ -41,9 +41,7 @@ public class Card {
     @Column(name = "price")
     private int price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -133,11 +131,11 @@ public class Card {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

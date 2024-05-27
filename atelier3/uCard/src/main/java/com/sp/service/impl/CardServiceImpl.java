@@ -1,35 +1,29 @@
 package com.sp.service.impl;
 
 import com.sp.mapper.CardMapper;
-import com.sp.mapper.UserMapper;
 import com.sp.model.Card;
-import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
-import com.sp.model.dto.UserDTO;
 import com.sp.repository.CardRepository;
 import com.sp.service.CardGenerator;
 import com.sp.service.CardService;
-import com.sp.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class CardServiceImpl implements CardService {
 
     private final CardRepository cardRepository;
     private final CardMapper cardMapper;
-    private final UserService userService;
     private final CardGenerator cardGenerator;
-    private final UserMapper userMapper;
 
-    public CardServiceImpl(CardRepository cardRepository, CardMapper cardMapper, UserService userService, CardGenerator cardGenerator, UserMapper userMapper) {
+    public CardServiceImpl(CardRepository cardRepository, CardMapper cardMapper, CardGenerator cardGenerator) {
         this.cardRepository = cardRepository;
         this.cardMapper = cardMapper;
-        this.userService = userService;
         this.cardGenerator = cardGenerator;
-        this.userMapper = userMapper;
     }
 
     @Override
@@ -40,15 +34,17 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public Optional<List<CardDTO>> getByUserId(Long userId) {
-        UserDTO user = userService.getById(userId).orElseThrow();
-        List<CardDTO> cards = user.getCards();
+        List<CardDTO> cards = this.cardRepository.findAllByUserId(userId)
+                .stream()
+                .map(cardMapper::toDTO)
+                .toList();
         return Optional.of(cards);
     }
 
     // find cards that doesn't belong to any user
     @Override
     public List<CardDTO> getAvailableCards() {
-        List<Card> cards = this.cardRepository.findAllWhereUserIsNull();
+        List<Card> cards = this.cardRepository.findAllWhereUserIdIsNull();
         return cardMapper.toDTOs(cards);
     }
 
@@ -59,20 +55,30 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void generateFiveCardsForUser(UserEntity user) {
+    public List<CardDTO> generateFiveCards() {
+        List<CardDTO> cards = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Card card = this.cardGenerator.generateNewCard();
-            card.setUser(user);
+            cards.add(this.cardMapper.toDTO(card));
             this.cardRepository.save(card);
         }
+        return cards;
     }
 
     @Override
-    public void setOwner(Long userId, CardDTO carddto) {
-        Card card = cardMapper.toEntity(carddto);
-        if (userId == null) card.setUser(null);
-        else card.setUser(this.userMapper.toEntity(this.userService.getById(userId).orElseThrow()));
-
+    public void setOwner(Long userId, Long cardId) {
+        Card card = this.cardRepository.findById(cardId).orElseThrow();
+        card.setUserId(userId);
         this.cardRepository.save(card);
+    }
+
+    @Override
+    public boolean isAvailableOnMarket(CardDTO card) {
+        return card.getUserId() == null;
+    }
+
+    @Override
+    public boolean hasOwner(Long id) {
+        return this.cardRepository.findById(id).orElseThrow().getUserId() != null;
     }
 }
