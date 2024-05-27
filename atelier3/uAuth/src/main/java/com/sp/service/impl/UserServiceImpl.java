@@ -1,6 +1,7 @@
 package com.sp.service.impl;
 
 import com.sp.mapper.UserMapper;
+import com.sp.model.UserEntity;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import com.sp.service.UserService;
@@ -43,6 +44,38 @@ public class UserServiceImpl implements UserService {
         return Optional.of(this.userMapper.toDTO(
                 this.userRepository.save(this.userMapper.toEntity(userDTO))
         ));
+    }
+
+    @Override
+    public boolean testWallet(long id, int amount) {
+        UserEntity user = this.userRepository.findById(id).orElse(null);
+        if (user != null)
+            return user.getWallet() >= amount;
+        throw new IllegalArgumentException("User not found");
+    }
+
+    @Override
+    public boolean addWallet(long id, int amount) {
+        UserEntity user = this.userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setWallet(user.getWallet() + amount);
+            this.userRepository.save(user);
+            return true;
+        }
+        throw new IllegalArgumentException("User not found");
+    }
+
+    @Override
+    public boolean subWallet(long id, int amount) {
+        UserEntity user = this.userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setWallet(user.getWallet() - amount);
+            if (user.getWallet() < 0)
+                throw new IllegalArgumentException("Not enough money");
+            this.userRepository.save(user);
+            return true;
+        }
+        throw new IllegalArgumentException("User not found");
     }
 
     @Override
