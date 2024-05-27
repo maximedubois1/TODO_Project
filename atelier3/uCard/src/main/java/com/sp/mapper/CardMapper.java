@@ -2,7 +2,6 @@ package com.sp.mapper;
 
 import com.sp.model.Card;
 import com.sp.model.dto.CardDTO;
-import com.sp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,14 +9,6 @@ import java.util.List;
 
 @Service
 public class CardMapper {
-
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
-
-    public CardMapper(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
 
     public CardDTO toDTO(Card card) {
         CardDTO cardDTO = new CardDTO();
@@ -32,10 +23,7 @@ public class CardMapper {
         cardDTO.setAttack(card.getAttack());
         cardDTO.setDefense(card.getDefense());
         cardDTO.setPrice(card.getPrice());
-
-        if (card.getUser() != null) {
-            cardDTO.setUser(userMapper.toDTO(userRepository.findById(card.getUser().getId()).orElseThrow()));
-        }
+        cardDTO.setUserId(card.getUserId());
 
         return cardDTO;
     }
@@ -53,10 +41,7 @@ public class CardMapper {
         card.setAttack(cardDTO.getAttack());
         card.setDefense(cardDTO.getDefense());
         card.setPrice(cardDTO.getPrice());
-
-        if (cardDTO.getUser() != null) {
-            card.setUser(userRepository.findById(cardDTO.getUser().getId()).orElseThrow());
-        }
+        card.setUserId(cardDTO.getUserId());
 
         return card;
     }

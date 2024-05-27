@@ -1,6 +1,5 @@
 package com.sp.service;
 
-import com.sp.model.UserEntity;
 import com.sp.model.dto.CardDTO;
 
 import java.util.List;
@@ -42,17 +41,34 @@ public interface CardService {
     Optional<CardDTO> getById(Long id);
 
     /**
-     * Generates five cards for a specific user.
+     * Generates five cards.
      *
-     * @param user the user for whom the cards are generated.
+     * @param userId the ID of the user who will own the cards.
+     * @return a list of five CardDTO objects.
      */
-    void generateFiveCardsForUser(UserEntity user);
+    List<CardDTO> generateFiveCards(Long userId);
 
     /**
      * Sets the owner of a card.
      *
-     * @param userId the ID of the user who will be the owner of the card.
-     * @param carddto the CardDTO object that will have its owner set.
+     * @param userId  the ID of the user who will be the owner of the card.
+     * @param cardId the ID of the card.
      */
-    void setOwner(Long userId, CardDTO carddto);
+    void setOwner(Long userId, Long cardId);
+
+    /**
+     * Checks if a card is available on the marketplace.
+     *
+     * @param id the ID of the card.
+     * @return true if the card is available on the marketplace, false otherwise.
+     */
+    boolean isAvailableOnMarket(Long id);
+
+    /**
+     * Checks if a card has an owner.
+     *
+     * @param id the ID of the card.
+     * @return true if the card has an owner, false otherwise.
+     */
+    boolean hasOwner(Long id);
 }
