@@ -61,7 +61,7 @@ public class AuthController {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
     }
 
-    @RequestMapping(value = {"/isConnected"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/is-connected"}, method = RequestMethod.POST)
     public ResponseEntity<Long> isConnected(HttpServletRequest request) {
         UserDTO user = authService.getLoggedUser(request);
         if (user == null) {
