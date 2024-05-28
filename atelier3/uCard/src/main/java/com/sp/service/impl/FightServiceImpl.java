@@ -55,4 +55,15 @@ public class FightServiceImpl implements FightService {
             return null;
         }
     }
+
+    @Override
+    public void regainEnergyOnAllCard() {
+        this.cardService.getAll().forEach(cardDTO -> {
+            cardDTO.setEnergy(cardDTO.getEnergy() + 5);
+            if (cardDTO.getEnergy() > 100) {
+                cardDTO.setEnergy(100);
+            }
+            this.cardService.update(cardDTO);
+        });
+    }
 }
