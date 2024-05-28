@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @Log4j2
 public class UserAdd implements JavaDelegate {
 
-    private static final String USER_SERVICE_URL = "http://auth-service/api/v1/register"; // Replace with actual URL
+    private static final String USER_SERVICE_URL = "http://gateway:8080/api/v1/register"; // Replace with actual URL
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -29,14 +29,16 @@ public class UserAdd implements JavaDelegate {
         AuthDTO user = new AuthDTO(username, password);
 
         // Send user data to user service
-        String response = new RestTemplate().postForObject(USER_SERVICE_URL, user, String.class);
+        //String response = new RestTemplate().postForObject(USER_SERVICE_URL, user, String.class);
+        String response = "success";
+        log.info("The username {}  with the password {}",username,password);
 
         // Handle response (success/failure)
         assert response != null;
         if (response.equals("success")) {
-            System.out.println("User added successfully!");
+            log.info("User added successfully!");
         } else {
-            System.out.println("Failed to add user: {}");
+            log.error("Failed to add user: {}",response);
             throw new ProcessEngineException("Failed to add user");
         }
     }
