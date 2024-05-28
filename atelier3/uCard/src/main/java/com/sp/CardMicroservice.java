@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class SpAppHero {
+public class CardMicroservice {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpAppHero.class, args);
+		SpringApplication.run(CardMicroservice.class, args);
 	}
 
 }

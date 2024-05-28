@@ -1,4 +1,3 @@
-# Standalone Eureka Server
 eureka:
   instance:
     hostname: localhost
