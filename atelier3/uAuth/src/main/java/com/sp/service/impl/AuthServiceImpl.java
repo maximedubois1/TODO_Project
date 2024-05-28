@@ -34,9 +34,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponseDTO authenticate(AuthDTO authDTO) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getUsername(), authDTO.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getSurname(), authDTO.getPassword()));
         if (authentication.isAuthenticated())
-            return new JwtResponseDTO.Builder().withAccessToken(jwtService.generateToken(authDTO.getUsername())).build();
+            return new JwtResponseDTO.Builder().withAccessToken(jwtService.generateToken(authDTO.getSurname())).build();
         else
             return null;
     }

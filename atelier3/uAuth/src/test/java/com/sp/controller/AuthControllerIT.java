@@ -4,12 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sp.model.dto.AuthDTO;
 import com.sp.service.impl.UserDetailsServiceImpl;
 import com.sp.utils.security.JwtService;
+import jakarta.servlet.Filter;
 import jakarta.servlet.http.Cookie;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,6 +22,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
@@ -37,7 +42,6 @@ public class AuthControllerIT {
     private static final Logger log = LoggerFactory.getLogger(AuthControllerIT.class);
     private static final String BASE_URL = "/api/v1/auth";
 
-    ;
     @Autowired
     private MockMvc mockMvc;
 
@@ -60,18 +64,21 @@ public class AuthControllerIT {
         authDTO.setPassword("password");
 
         ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(authDTO);
+        log.info(json);
+
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/login")
                         .contentType("application/json")
-                        .content(
-                                objectMapper.writeValueAsString(authDTO)))
+                        .content(json))
                 .andExpect(status().isOk())
                 .andReturn();
-        log.info(result.getResponse().getContentAsString());
+
+        log.info("Cookies: {}", Arrays.toString(result.getResponse().getCookies()));
+
         boolean cookieExists = Arrays.stream(result.getResponse().getCookies())
-                .anyMatch(cookie -> cookie.getName().equals("auth_jwt"));
+                .anyMatch(cookie -> "auth_jwt".equals(cookie.getName()));
 
         assertTrue(cookieExists);
-
     }
 
     @Test
