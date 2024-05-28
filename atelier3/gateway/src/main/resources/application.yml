@@ -6,7 +6,7 @@ spring:
 
 eureka:
   server:
-    host: localhost:8761
+    host: discovery:8761
   client:
     serviceUrl:
       defaultZone: http://${eureka.server.host}/eureka
