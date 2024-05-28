@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_02f0rwb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
-  <bpmn:process id="Process_0epaa5p" isExecutable="true">
+  <bpmn:process id="register" name="Register to the web site" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>Flow_1r0v5pw</bpmn:outgoing>
     </bpmn:startEvent>
@@ -25,7 +25,7 @@
     <bpmn:association id="Association_025px61" associationDirection="One" sourceRef="Event_1f5ac1k" targetRef="Activity_0iyue22" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0epaa5p">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="register">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="219" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -42,11 +42,6 @@
       <bpmndi:BPMNShape id="Event_1nffudg_di" bpmnElement="Event_1nffudg">
         <dc:Bounds x="912" y="219" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_025px61_di" bpmnElement="Association_025px61">
-        <di:waypoint x="440" y="179" />
-        <di:waypoint x="440" y="120" />
-        <di:waypoint x="550" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_18s22aq_di" bpmnElement="Event_1f5ac1k">
         <dc:Bounds x="422" y="179" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -61,6 +56,11 @@
       <bpmndi:BPMNEdge id="Flow_1mhay7i_di" bpmnElement="Flow_1mhay7i">
         <di:waypoint x="860" y="237" />
         <di:waypoint x="912" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_025px61_di" bpmnElement="Association_025px61">
+        <di:waypoint x="440" y="179" />
+        <di:waypoint x="440" y="120" />
+        <di:waypoint x="550" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
