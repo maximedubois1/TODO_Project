@@ -41,6 +41,16 @@ public class CardServiceImpl implements CardService {
         return Optional.of(cards);
     }
 
+    @Override
+    public Optional<List<CardDTO>> getByUserIdForFight(Long userId) {
+        List<CardDTO> cards = this.cardRepository.findAllByUserId(userId)
+                .stream()
+                .filter(card -> card.getEnergy() > 15)
+                .map(cardMapper::toDTO)
+                .toList();
+        return Optional.of(cards);
+    }
+
     // find cards that doesn't belong to any user
     @Override
     public List<CardDTO> getAvailableCards() {
@@ -80,5 +90,12 @@ public class CardServiceImpl implements CardService {
     @Override
     public boolean hasOwner(Long id) {
         return this.cardRepository.findById(id).orElseThrow().getUserId() != null;
+    }
+
+    @Override
+    public CardDTO update(CardDTO cardDTO) {
+        Card card = this.cardMapper.toEntity(cardDTO);
+        Card updatedCard = this.cardRepository.save(card);
+        return this.cardMapper.toDTO(updatedCard);
     }
 }

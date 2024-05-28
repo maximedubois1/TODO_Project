@@ -26,6 +26,13 @@ public interface CardService {
     Optional<List<CardDTO>> getByUserId(Long userId);
 
     /**
+     * Fetches the cards that belong to a specific user for a fight.
+     * @param userId
+     * @return
+     */
+    Optional<List<CardDTO>> getByUserIdForFight(Long userId);
+
+    /**
      * Fetches the cards that are available on the marketplace.
      *
      * @return a list of CardDTO objects that are available on the marketplace.
@@ -71,4 +78,12 @@ public interface CardService {
      * @return true if the card has an owner, false otherwise.
      */
     boolean hasOwner(Long id);
+
+    /**
+     * Updates a card.
+     *
+     * @param cardDTO the CardDTO object containing the updated information.
+     * @return the updated CardDTO object.
+     */
+    CardDTO update(CardDTO cardDTO);
 }
