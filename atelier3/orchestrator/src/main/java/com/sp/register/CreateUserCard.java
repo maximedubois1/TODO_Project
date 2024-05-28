@@ -1,6 +1,8 @@
 package com.sp.register;
 
 import jakarta.inject.Named;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -9,6 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @Named
+@RequiredArgsConstructor
+@Log4j2
 public class CreateUserCard implements JavaDelegate {
     private static final String USER_SERVICE_URL = "http://your-user-service-host:port/generate-for/"; // Replace with actual URL
 
@@ -19,14 +23,14 @@ public class CreateUserCard implements JavaDelegate {
         // Create user object
 
         // Send user data to user service
-        String response = new RestTemplate().postForObject(USER_SERVICE_URL + "42", "", String.class);
+        String response = "success"; //new RestTemplate().postForObject(USER_SERVICE_URL + "42", "", String.class);
 
         // Handle response (success/failure)
         assert response != null;
         if (response.equals("success")) {
-            System.out.println("Card created successfully!");
+            log.info("Card created successfully!");
         } else {
-            System.out.println("Failed to create card: {}");
+            log.error("Failed to create card: {}",response);
             throw new ProcessEngineException("Failed to create card");
         }
     }

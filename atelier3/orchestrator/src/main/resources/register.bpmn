@@ -10,6 +10,7 @@
       <bpmn2:compensateEventDefinition id="CompensateEventDefinition_1sxrd79" />
     </bpmn2:boundaryEvent>
     <bpmn2:serviceTask id="Activity_0j5hvdc" name="UserAdd" camunda:delegateExpression="#{userAdd}">
+      <bpmn2:extensionElements />
       <bpmn2:incoming>Flow_1r0v5pw</bpmn2:incoming>
       <bpmn2:outgoing>Flow_03ne83g</bpmn2:outgoing>
     </bpmn2:serviceTask>
