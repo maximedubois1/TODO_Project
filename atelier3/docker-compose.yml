@@ -27,6 +27,16 @@ services:
       - db
       - discovery
 
+  uauth:
+    build:
+      context: uAuth
+      dockerfile: Dockerfile
+    ports:
+      - "8091:8091"
+    depends_on:
+      - db
+      - discovery
+
   db:
     image: postgres:13
     environment:

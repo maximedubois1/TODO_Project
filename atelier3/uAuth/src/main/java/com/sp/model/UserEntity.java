@@ -26,9 +26,6 @@ public class UserEntity {
     @Column(name = "wallet", nullable = false)
     private int wallet;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<UserRole> roles = new HashSet<>();
-
     public UserEntity() {
     }
 
@@ -72,11 +69,4 @@ public class UserEntity {
         this.wallet = wallet;
     }
 
-    public Set<UserRole> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<UserRole> roles) {
-        this.roles = roles;
-    }
 }
