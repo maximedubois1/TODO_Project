@@ -1,4 +1,4 @@
-package com.sp.register;
+package com.sp.cardManager;
 
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
@@ -7,13 +7,13 @@ import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+
 
 @Component
 @Named
 @RequiredArgsConstructor
 @Log4j2
-public class CreateUserCard implements JavaDelegate {
+public class CardCheck implements JavaDelegate {
     private static final String USER_SERVICE_URL = "http://your-user-service-host:port/generate-for/"; // Replace with actual URL
 
     @Override
