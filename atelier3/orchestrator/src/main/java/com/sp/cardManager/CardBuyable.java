@@ -1,4 +1,4 @@
-package com.sp.moneyManager;
+package com.sp.cardManager;
 
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -15,19 +16,23 @@ import org.springframework.web.client.RestTemplate;
 @Named
 @RequiredArgsConstructor
 @Log4j2
-public class MoneyAdd implements JavaDelegate {
-    private static final String USER_SERVICE_URL = "http://your-user-service-host:port/wallet/"; // TODO: find the great url
+public class CardBuyable implements JavaDelegate {
+    private static final String USER_SERVICE_URL = "http://your-user-service-host:port/is-buyable/"; // TODO: find the great url
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws BpmnError {
         // Extract user data from delegateExecution (assuming it's passed as a variable)
-        String userid = (String) delegateExecution.getVariable("userId"); // TODO: find a way to get userid
-        String price = (String) delegateExecution.getVariable("price");
+        String cardId = (String) delegateExecution.getVariable("cardId");
         // Create user object
 
-
         // Send user data to user service
-        String response = new RestTemplate().postForObject(USER_SERVICE_URL + userid + "/add/" + price, "", String.class);
+        String response;
+        try {
+            response = new RestTemplate().postForObject(USER_SERVICE_URL + cardId, "", String.class);
+        } catch (RestClientException e) {
+            log.error("Failed to access to the platform");
+            throw new BpmnError("Failed to access to the platform");
+        }
 
         // Handle response (success/failure)
         assert response != null;

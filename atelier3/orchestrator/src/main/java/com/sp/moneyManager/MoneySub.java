@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Named
 @RequiredArgsConstructor
 @Log4j2
-public class MoneyAdd implements JavaDelegate {
+public class MoneySub implements JavaDelegate {
     private static final String USER_SERVICE_URL = "http://your-user-service-host:port/wallet/"; // TODO: find the great url
 
     @Override
@@ -27,7 +27,7 @@ public class MoneyAdd implements JavaDelegate {
 
 
         // Send user data to user service
-        String response = new RestTemplate().postForObject(USER_SERVICE_URL + userid + "/add/" + price, "", String.class);
+        String response = new RestTemplate().postForObject(USER_SERVICE_URL + userid + "/sub/" + price, "", String.class);
 
         // Handle response (success/failure)
         assert response != null;
