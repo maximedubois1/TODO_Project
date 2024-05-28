@@ -6,10 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class SpAppHero {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SpAppHero.class, args);
-	}
-
+public class ApiGateway {
+    public static void main(String[] args) {
+        SpringApplication.run(ApiGateway.class, args);
+    }
 }

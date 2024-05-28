@@ -1,0 +1,17 @@
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway
+
+eureka:
+  server:
+    host: discovery:8761
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.server.host}/eureka
+
+logging:
+  level:
+    root: INFO
+    com.sp: INFO

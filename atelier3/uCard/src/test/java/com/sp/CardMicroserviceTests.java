@@ -10,7 +10,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
-class SpAppHeroTests {
+class CardMicroserviceTests {
 
 	@Test
 	void contextLoads() {

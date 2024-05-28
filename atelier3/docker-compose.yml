@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  discovery:
+    build:
+      context: discovery
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+
+  gateway:
+    build:
+      context: gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery
+
+  ucard:
+    build:
+      context: uCard
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - db
+      - discovery
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: todo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
