@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_02f0rwb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
-  <bpmn:process id="register" name="Register to the web site" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>Flow_1r0v5pw</bpmn:outgoing>
-    </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1r0v5pw" sourceRef="StartEvent_1" targetRef="Activity_0j5hvdc" />
-    <bpmn:boundaryEvent id="Event_1f5ac1k" attachedToRef="Activity_0j5hvdc">
-      <bpmn:compensateEventDefinition id="CompensateEventDefinition_1sxrd79" />
-    </bpmn:boundaryEvent>
-    <bpmn:serviceTask id="Activity_0j5hvdc" name="UserAdd" camunda:delegateExpression="#{UserAdd}">
-      <bpmn:incoming>Flow_1r0v5pw</bpmn:incoming>
-      <bpmn:outgoing>Flow_03ne83g</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0iyue22" name="UserRemove" isForCompensation="true" camunda:delegateExpression="#{UserRemove}" />
-    <bpmn:sequenceFlow id="Flow_03ne83g" sourceRef="Activity_0j5hvdc" targetRef="Activity_094w7io" />
-    <bpmn:serviceTask id="Activity_094w7io" name="CreateCard" camunda:delegateExpression="#{CreateUserCard}">
-      <bpmn:incoming>Flow_03ne83g</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mhay7i</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:endEvent id="Event_1nffudg">
-      <bpmn:incoming>Flow_1mhay7i</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1mhay7i" sourceRef="Activity_094w7io" targetRef="Event_1nffudg" />
-    <bpmn:association id="Association_025px61" associationDirection="One" sourceRef="Event_1f5ac1k" targetRef="Activity_0iyue22" />
-  </bpmn:process>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_DdZocL47EeOQo_IRkjDF6w" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="register" name="Register to the web site" isExecutable="true" camunda:versionTag="1" camunda:historyTimeToLive="P180D">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:extensionElements />
+      <bpmn2:outgoing>Flow_1r0v5pw</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="Flow_1r0v5pw" sourceRef="StartEvent_1" targetRef="Activity_0j5hvdc" />
+    <bpmn2:boundaryEvent id="Event_1f5ac1k" attachedToRef="Activity_0j5hvdc">
+      <bpmn2:compensateEventDefinition id="CompensateEventDefinition_1sxrd79" />
+    </bpmn2:boundaryEvent>
+    <bpmn2:serviceTask id="Activity_0j5hvdc" name="UserAdd" camunda:delegateExpression="#{userAdd}">
+      <bpmn2:incoming>Flow_1r0v5pw</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_03ne83g</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="Activity_0iyue22" name="UserRemove" isForCompensation="true" camunda:delegateExpression="#{userRemove}" />
+    <bpmn2:sequenceFlow id="Flow_03ne83g" sourceRef="Activity_0j5hvdc" targetRef="Activity_094w7io" />
+    <bpmn2:serviceTask id="Activity_094w7io" name="CreateCard" camunda:delegateExpression="#{createUserCard}">
+      <bpmn2:incoming>Flow_03ne83g</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1mhay7i</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="Event_1nffudg">
+      <bpmn2:incoming>Flow_1mhay7i</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_1mhay7i" sourceRef="Activity_094w7io" targetRef="Event_1nffudg" />
+    <bpmn2:association id="Association_025px61" associationDirection="One" sourceRef="Event_1f5ac1k" targetRef="Activity_0iyue22" />
+  </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="register">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -64,4 +65,4 @@
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-</bpmn:definitions>
+</bpmn2:definitions>

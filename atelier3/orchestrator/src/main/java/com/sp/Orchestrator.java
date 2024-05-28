@@ -22,7 +22,7 @@ public class Orchestrator {
 
 	@EventListener
 	public void processPostDeploy(PostDeployEvent event) {
-		runtimeService.startProcessInstanceByKey("register");
+		//runtimeService.startProcessInstanceByKey("register");
 	}
 
 }
