@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpAppHero {
+public class AuthMicroService {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpAppHero.class, args);
+		SpringApplication.run(AuthMicroService.class, args);
 	}
 
 }
