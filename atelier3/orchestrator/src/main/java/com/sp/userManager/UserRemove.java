@@ -1,6 +1,8 @@
-package com.sp.register;
+package com.sp.userManager;
 
 import jakarta.inject.Named;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
@@ -8,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @Named
+@RequiredArgsConstructor
+@Log4j2
 public class UserRemove implements JavaDelegate {
     private static final String USER_SERVICE_URL = "http://your-user-service-host:port/api/v1/users"; // Replace with actual URL
 
@@ -16,11 +20,11 @@ public class UserRemove implements JavaDelegate {
 
 
         // Send user data to user service
-        new RestTemplate().delete(USER_SERVICE_URL);
+        //new RestTemplate().delete(USER_SERVICE_URL);
 
         // Handle response (success/failure)
 
-        System.out.println("User deleted!");
+        log.info("User deleted!");
 
     }
 }

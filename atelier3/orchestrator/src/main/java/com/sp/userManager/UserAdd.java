@@ -1,4 +1,4 @@
-package com.sp.register;
+package com.sp.userManager;
 
 import com.sp.dto.AuthDTO;
 import jakarta.inject.Named;
@@ -7,9 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 @Named

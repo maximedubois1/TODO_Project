@@ -1,13 +1,14 @@
-package com.sp.register;
+package com.sp.cardManager;
 
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.camunda.bpm.engine.ProcessEngineException;
+import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.core.task.TaskRejectedException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 @Component
 @Named
@@ -23,7 +24,7 @@ public class CreateUserCard implements JavaDelegate {
         // Create user object
 
         // Send user data to user service
-        String response = "success"; //new RestTemplate().postForObject(USER_SERVICE_URL + "42", "", String.class);
+        String response = "fail"; //new RestTemplate().postForObject(USER_SERVICE_URL + "42", "", String.class);
 
         // Handle response (success/failure)
         assert response != null;
@@ -31,7 +32,7 @@ public class CreateUserCard implements JavaDelegate {
             log.info("Card created successfully!");
         } else {
             log.error("Failed to create card: {}",response);
-            throw new ProcessEngineException("Failed to create card");
+            throw new BpmnError ("Failed to create card");
         }
     }
 }
