@@ -1,10 +1,10 @@
-package com.sp;
+package com.sp.discovery;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpAppHeroTests {
+class DiscoveryServerAppTests {
 
 	@Test
 	void contextLoads() {

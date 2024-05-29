@@ -54,10 +54,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String jwt = null;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("auth_jwt")) {
-                jwt = cookie.getValue();
-                break;
+        if (request.getCookies() != null) {
+
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("auth_jwt")) {
+                    jwt = cookie.getValue();
+                    break;
+                }
             }
         }
 

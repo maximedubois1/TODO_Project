@@ -1,14 +1,9 @@
-package com.sp.dto;
+package com.sp.dtos;
 
 public class AuthDTO {
 
     private String surname;
     private String password;
-
-    public AuthDTO(String surname, String password) {
-        this.surname = surname;
-        this.password = password;
-    }
 
     public String getSurname() {
         return surname;
