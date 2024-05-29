@@ -7,6 +7,17 @@ camunda.bpm:
     create: All tasks
   authorization:
     enabled: off
+
 spring:
   application:
     name: orchestrator
+
+server:
+  port: 8084
+  
+eureka:
+  server:
+    host: ${spring.application.name}:8761
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.server.host}/eureka

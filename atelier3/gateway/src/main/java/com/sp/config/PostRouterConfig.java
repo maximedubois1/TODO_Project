@@ -31,7 +31,7 @@ public class PostRouterConfig {
                         .filters(f -> f.modifyRequestBody(AuthDTO.class, AuthDtoToOrch.class,
                                         (exchange, authDTO) -> Mono.just(GatewayUtils.convertAuthDtoForOrchestrator(authDTO)))
                                 .setPath("/engine-rest/process-definition/key/register/start"))
-                        .uri("lb://saga-orchestrator"))
+                        .uri("lb://orchestrator"))
                 .build();
     }
 }
