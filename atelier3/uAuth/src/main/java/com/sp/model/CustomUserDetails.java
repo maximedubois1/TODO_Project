@@ -19,10 +19,6 @@ public class CustomUserDetails extends UserEntity implements UserDetails {
         this.password= byUsername.getPassword();
         List<GrantedAuthority> auths = new ArrayList<>();
 
-        for(UserRole role : byUsername.getRoles()){
-
-            auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
-        }
         this.authorities = auths;
     }
 
