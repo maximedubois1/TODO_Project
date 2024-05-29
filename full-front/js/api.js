@@ -1,6 +1,6 @@
 const Auth_PORT = 8080;
-const Card_PORT = 8090;
-const Room_PORT = 8091;
+const Card_PORT = 8080;
+const Room_PORT = 8080;
 const URL_BASE = `http://localhost`;
 
 let userid;
