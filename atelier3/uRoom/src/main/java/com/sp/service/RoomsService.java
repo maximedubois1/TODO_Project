@@ -48,6 +48,14 @@ public interface RoomsService {
      */
     void joinRoom(String roomName, Long userID);
 
+
+    /**
+     * Set a card for a user in a room.
+     * @param roomName
+     * @param userID
+     * @param cardID
+     */
+    void setCard(String roomName, Long userID, Long cardID);
     /**
      * Add OwnerCard
      *

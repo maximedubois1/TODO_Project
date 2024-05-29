@@ -2,10 +2,12 @@ package com.sp.mapper;
 
 import com.sp.model.RoomEntity;
 import com.sp.model.dto.RoomDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RoomMapper {
 
     public RoomDTO toDTO(RoomEntity roomEntity){

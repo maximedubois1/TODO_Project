@@ -36,6 +36,7 @@ public class JwtService implements Serializable {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
+                .setAllowedClockSkewSeconds(300)
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)

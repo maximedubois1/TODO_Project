@@ -25,7 +25,7 @@ public class RoomsController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<RoomDTO> getRoomByName(HttpServletRequest request, @PathVariable String name) {
+    public ResponseEntity<RoomDTO> getRoomByName(@PathVariable String name) {
         RoomDTO room = this.roomsService.getRoomByName(name).orElse(null);
         if (room == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -47,14 +47,15 @@ public class RoomsController {
     }
 
     @PostMapping("/join/{name}/{userID}")
-    public ResponseEntity<String> joinRoom(@PathVariable String name) {
+    public ResponseEntity<String> joinRoom(@PathVariable String name, @PathVariable Long userID) {
+        this.roomsService.joinRoom(name, userID);
         return ResponseEntity.ok("Room joined");
     }
 
-    @PostMapping("/addOwnerCard/{roomName}/{cardID}")
-    public ResponseEntity<String> addOwnerCard(@PathVariable String roomName, @PathVariable Long cardID) {
-        this.roomsService.addOwnerCard(roomName, cardID);
-        return ResponseEntity.ok("Owner card added");
+    @PostMapping("/setcard/{roomName}/{userID}/{cardID}")
+    public ResponseEntity<String> addOwnerCard(@PathVariable String roomName,@PathVariable Long userID, @PathVariable Long cardID) {
+        this.roomsService.setCard(roomName,userID, cardID);
+        return ResponseEntity.ok("card added");
     }
 
     @PostMapping("/addOpponentCard/{roomName}/{cardID}")
