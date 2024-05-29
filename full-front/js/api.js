@@ -1,6 +1,6 @@
-const Auth_PORT = 8080;
-const Card_PORT = 8080;
-const Room_PORT = 8080;
+const Auth_PORT = 8081;
+const Card_PORT = 8090;
+const Room_PORT = 8091;
 const URL_BASE = `http://localhost`;
 
 let userid;
@@ -106,6 +106,7 @@ async function createUser(user) {
 }
 
 async function authUser(data) {
+    deleteCookie('auth_jwt');
     return fetch(`${URL_BASE}:${Auth_PORT}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
@@ -266,9 +267,9 @@ async function fight(fightDTO){
         credentials: 'include',
         body: JSON.stringify(fightDTO),
     })
-        // .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-            console.log(data)
-            return data
+            console.log("fight"  + data);
+            return data;
         })
 }

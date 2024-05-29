@@ -10,7 +10,16 @@ function onProcess(id) {
     fightdto.ownerCardID = groom.ownerCardID;
     fightdto.opponentID = groom.opponentID;
     fightdto.opponentCardID = groom.opponentCardID;
-    fight(fightdto).then(r => alert(r.text()));
+    fight(fightdto).then(r => {
+        console.log("mon id :"  + guser.id + " r: " + r);
+        if (guser.id == r.trim()) {
+            alert("You won");
+            window.location.replace("./cardList-result.html?result=win&bet=" + groom.bet);
+        } else {
+            alert("You lost");
+            window.location.replace("./cardList-result.html?result=lost&bet=" + groom.bet);
+        }
+    });
 }
 
 
