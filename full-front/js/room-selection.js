@@ -1,62 +1,26 @@
-
-// let user ={"username":"John","wallet":5000}
-let roomList = [
-        {
-            id:1,
-            room_name:"Room 1",
-            user_id: 25,
-            bet: 150,
-        },
-        {
-            id:2,
-            room_name:"Room 2",
-            user_id: 45,
-            bet: 1000,
-        },
-        {
-            id:3,
-            room_name:"Room 3",
-            user_id: 14,
-            bet: 300,
-        },
-        {
-            id:4,
-            room_name:"Room 4",
-            user_id: 2,
-            bet: 150,
-        },
-        {
-            id:5,
-            room_name:"Room 5",
-            user_id: 21,
-            bet: 10000,
-        },
-        {
-            id:6,
-            room_name:"Room 6",
-            user_id: 5,
-            bet: 50
-        }
-
-    ]
+let guser;
 
 function onProcess(id){
     let roomName = document.getElementsByName('room-name');
     let betName = document.getElementsByName('bet');
     
 
-    data = {"roomName":roomName[0].value, "bet":betName[0].value}
+    data = {"name":roomName[0].value, "bet":betName[0].value, "ownerID":guser.id}
     console.log(data);
+    createRoom(data);
 }
 
 function onProcessGame(obj){
     let room_id =obj.firstElementChild.innerHTML;
+    room_id = room_id.replace(" ", "");
     console.log(room_id);
-    document.location.href="/cardList-select-card.html?room_id="+room_id; 
+    joinRoom(room_id, guser.id).then(() => document.location.href="./cardList-select-card.html?room_id="+room_id);
+    // document.location.href="./cardList-select-card.html?room_id="+room_id;
 }
 
 
 function setUserInfo(user){
+    guser = user;
     document.getElementById("userNameId").innerHTML= user.surname;
     document.getElementById("walletId").innerHTML= user.wallet;
 }
@@ -66,7 +30,7 @@ const urlParams = new URLSearchParams(queryString);
 const userCardId = urlParams.get('id');
 
 fetchUserInfo().then(r => setUserInfo(r))
-setTemplateRoom("#roomlist","#roomContent",roomList)
+fetchRooms().then(r => setTemplateRoom("#roomlist","#roomContent",r))
 
 
 

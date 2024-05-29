@@ -2,9 +2,11 @@ package com.sp.controller;
 
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.JwtResponseDTO;
+import com.sp.model.dto.UserDTO;
 import com.sp.service.AuthService;
 import com.sp.utils.CookieUtil;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,17 +48,22 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
-        JwtResponseDTO jwt = authService.register(authDTO);
+    public ResponseEntity<Long> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
+        UserDTO userDTO = authService.register(authDTO);
 
-        if (jwt == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(-1L);
         }
 
-        String token = jwt.getAccessToken();
-        Cookie jwtCookie = new Cookie("auth_jwt", token);
-        response.addCookie(jwtCookie);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
+        return ResponseEntity.ok().body(userDTO.getId());
     }
 
+    @RequestMapping(value = {"/is-connected"}, method = RequestMethod.POST)
+    public ResponseEntity<Long> isConnected(HttpServletRequest request) {
+        UserDTO user = authService.getLoggedUser(request);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(-1L);
+        }
+        return ResponseEntity.ok().body(user.getId());
+    }
 }

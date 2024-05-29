@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedHeaders("*")
                 .allowedMethods("*")
-                .allowedOrigins("http://localhost:3000", "http://localhost:63343")
+                .allowedOrigins("http://localhost:3000", "http://localhost:63342")
                 .allowCredentials(true);
     }
 
@@ -28,7 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("http://localhost:63343");
+        config.addAllowedOrigin("http://localhost:63342");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

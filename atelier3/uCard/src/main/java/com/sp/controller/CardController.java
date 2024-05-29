@@ -1,7 +1,9 @@
 package com.sp.controller;
 
 import com.sp.model.dto.CardDTO;
+import com.sp.model.dto.FightDTO;
 import com.sp.service.CardService;
+import com.sp.service.FightService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class CardController {
 
     private final CardService cardService;
+    private final FightService fightService;
 
-    public CardController(CardService cardService) {
+    public CardController(CardService cardService, FightService fightService) {
         this.cardService = cardService;
+        this.fightService = fightService;
     }
 
     @GetMapping
@@ -25,6 +29,11 @@ public class CardController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<Optional<List<CardDTO>>> getMine(@PathVariable Long id) {
+        return ResponseEntity.ok(this.cardService.getByUserId(id));
+    }
+
+    @GetMapping("/user/{id}/fight")
+    public ResponseEntity<Optional<List<CardDTO>>> getMineForFight(@PathVariable Long id) {
         return ResponseEntity.ok(this.cardService.getByUserId(id));
     }
 
@@ -68,5 +77,12 @@ public class CardController {
         }
         return ResponseEntity.ok(cards);
     }
+
+    @PostMapping("/fight")
+    public ResponseEntity<Long> fight(@RequestBody FightDTO fightDTO) {
+        Long winnerID = this.fightService.fight(fightDTO);
+        return ResponseEntity.ok(winnerID);
+    }
+
 
 }

@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         logger.debug("Entering in loadUserByUsername Method...");
-        UserEntity user = userRepository.findByUsername(username);
+        UserEntity user = userRepository.findBySurname(username);
         if(user == null){
             logger.error("Username not found: " + username);
             throw new UsernameNotFoundException("could not found user..!!");

@@ -1,8 +1,6 @@
 package com.sp.mapper;
 
-import com.sp.model.Card;
 import com.sp.model.UserEntity;
-import com.sp.model.dto.CardDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -26,28 +24,6 @@ public class UserMapper {
         userDTO.setName(user.getName());
         userDTO.setSurname(user.getSurname());
         userDTO.setWallet(user.getWallet());
-
-        List<CardDTO> cardDTOList = new ArrayList<>();
-        if (user.getCards() != null) {
-            for (Card card : user.getCards()) {
-                CardDTO cardDTO = new CardDTO();
-                cardDTO.setId(card.getId());
-                cardDTO.setName(card.getName());
-                cardDTO.setDescription(card.getDescription());
-                cardDTO.setImageUrl(card.getImageUrl());
-                cardDTO.setFamily(card.getFamily());
-                cardDTO.setAffinity(card.getAffinity());
-                cardDTO.setHp(card.getHp());
-                cardDTO.setEnergy(card.getEnergy());
-                cardDTO.setAttack(card.getAttack());
-                cardDTO.setDefense(card.getDefense());
-                cardDTO.setPrice(card.getPrice());
-
-                cardDTOList.add(cardDTO);
-            }
-            userDTO.setCards(cardDTOList);
-        }
-
         return userDTO;
     }
 
@@ -61,33 +37,6 @@ public class UserMapper {
         user.setSurname(userDTO.getSurname());
         user.setWallet(userDTO.getWallet());
         userEnt.ifPresent(userEntity -> user.setPassword(userEntity.getPassword()));
-
-        List<Card> cardList = new ArrayList<>();
-        if (userDTO.getCards() != null) {
-            for (CardDTO cardDTO : userDTO.getCards()) {
-                Card card = new Card();
-                card.setId(cardDTO.getId());
-                card.setName(cardDTO.getName());
-                card.setDescription(cardDTO.getDescription());
-                card.setImageUrl(cardDTO.getImageUrl());
-                card.setFamily(cardDTO.getFamily());
-                card.setAffinity(cardDTO.getAffinity());
-                card.setHp(cardDTO.getHp());
-                card.setEnergy(cardDTO.getEnergy());
-                card.setAttack(cardDTO.getAttack());
-                card.setDefense(cardDTO.getDefense());
-                card.setPrice(cardDTO.getPrice());
-                //if (cardDTO.getUser() != null)
-                //card.setUserId(null);
-                //card.setUserId(cardDTO.getUser()); TODO : Temp remove for debug
-                //else
-                card.setUser(user);
-
-                cardList.add(card);
-            }
-        }
-
-        user.setCards(cardList);
 
         return user;
     }

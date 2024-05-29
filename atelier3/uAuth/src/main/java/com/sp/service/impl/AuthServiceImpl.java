@@ -1,19 +1,18 @@
 package com.sp.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.sp.mapper.UserMapper;
 import com.sp.model.UserEntity;
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.JwtResponseDTO;
 import com.sp.model.dto.UserDTO;
 import com.sp.repository.UserRepository;
 import com.sp.service.AuthService;
-import com.sp.service.CardService;
 import com.sp.service.UserService;
 import com.sp.utils.CookieUtil;
 import com.sp.utils.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,22 +24,23 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private final CardService cardService;
     private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
 
-    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository, CardService cardService, AuthenticationManager authenticationManager) {
+    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository,
+                           AuthenticationManager authenticationManager, UserMapper userMapper) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
-        this.cardService = cardService;
         this.authenticationManager = authenticationManager;
+        this.userMapper = userMapper;
     }
 
     @Override
     public JwtResponseDTO authenticate(AuthDTO authDTO) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getUsername(), authDTO.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authDTO.getSurname(), authDTO.getPassword()));
         if (authentication.isAuthenticated())
-            return new JwtResponseDTO.Builder().withAccessToken(jwtService.generateToken(authDTO.getUsername())).build();
+            return new JwtResponseDTO.Builder().withAccessToken(jwtService.generateToken(authDTO.getSurname())).build();
         else
             return null;
     }
@@ -70,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtResponseDTO register(AuthDTO authDTO) {
+    public UserDTO register(AuthDTO authDTO) {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }
@@ -82,8 +82,6 @@ public class AuthServiceImpl implements AuthService {
         newUser.setName(authDTO.getSurname());
         newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
-        newUser = userRepository.save(newUser);
-        cardService.generateFiveCardsForUser(newUser);
-        return authenticate(authDTO);
+        return this.userMapper.toDTO(this.userRepository.save(newUser));
     }
 }

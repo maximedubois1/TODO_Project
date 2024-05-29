@@ -40,5 +40,5 @@ public interface AuthService {
      * @param authDTO the AuthDTO object containing the registration details of the user.
      * @return a Cookie object containing the session details if the registration was successful.
      */
-    JwtResponseDTO register(AuthDTO authDTO);
+    UserDTO register(AuthDTO authDTO);
 }
