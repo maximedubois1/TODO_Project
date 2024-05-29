@@ -1,0 +1,8 @@
+eureka:
+  server:
+    host: discovery:8761
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.server.host}/eureka
+    fetch-registry: false
+    register-with-eureka: true

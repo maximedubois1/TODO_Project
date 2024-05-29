@@ -2,7 +2,6 @@ package com.sp.config;
 
 import com.sp.dtos.AuthDTO;
 import com.sp.dtos.AuthDtoToOrch;
-import com.sp.dtos.ToOrch;
 import com.sp.utils.GatewayUtils;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -17,7 +16,6 @@ public class PostRouterConfig {
     @Bean
     RouteLocator userGateway(RouteLocatorBuilder routeLocatorBuilder) {
         return routeLocatorBuilder.routes()
-
                 .route(routeSpec -> routeSpec.path("/api/v1/auth/orch")
                         .and()
                         .method(HttpMethod.POST)
@@ -33,6 +31,18 @@ public class PostRouterConfig {
                                         (exchange, authDTO) -> Mono.just(GatewayUtils.convertAuthDtoForOrchestrator(authDTO)))
                                 .setPath("/engine-rest/process-definition/key/register/start"))
                         .uri("lb://orchestrator"))
+
+//                .route(routeSpec -> routeSpec.path("/api/v1/cards/buy/{cardId}/to-user/{userId}")
+//                        .and()
+//                        .method(HttpMethod.POST)
+//                        .filters(f -> f.modifyRequestBody(AuthDTO.class, AuthDtoToOrch.class,
+//                                        (exchange, authDTO) -> {
+//                                            String userId = exchange.getRequest().getQueryParams().getFirst("userId");
+//                                            return Mono.just(GatewayUtils.convertAuthDtoForOrchestrator(authDTO));
+//                                        })
+//                                .setPath("/engine-rest/process-definition/key/buy/start" + userId))
+//                        .uri("lb://orchestrator"))
+
                 .build();
     }
 }

@@ -2,7 +2,6 @@ package com.sp.utils;
 
 import com.sp.dtos.AuthDTO;
 import com.sp.dtos.AuthDtoToOrch;
-import com.sp.dtos.ToOrch;
 import com.sp.dtos.Variable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

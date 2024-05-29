@@ -3,6 +3,7 @@ package com.sp.userManager;
 import com.sp.dto.AuthDTO;
 import jakarta.inject.Named;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.delegate.BpmnError;
@@ -22,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 @Log4j2
 public class UserAdd implements JavaDelegate {
 
-    private static final String USER_SERVICE_URL = "http://localhost:8080/api/v1/auth/orch"; // TODO: find the great url
+    private static final String USER_SERVICE_URL = "http://gateway:8080/api/v1/auth/orch"; // TODO: find the great url
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws BpmnError {
