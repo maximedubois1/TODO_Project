@@ -22,20 +22,25 @@ import org.springframework.web.client.RestTemplate;
 @Log4j2
 public class UserAdd implements JavaDelegate {
 
-    private static final String USER_SERVICE_URL = "http://gateway:8080/api/v1/register"; // TODO: find the great url
+    private static final String USER_SERVICE_URL = "http://localhost:8080/api/v1/auth/orch"; // TODO: find the great url
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws BpmnError {
         // Extract user data from delegateExecution (assuming it's passed as a variable)
+        log.info(delegateExecution.toString());
+        log.info(delegateExecution.getVariables().toString());
         String username = (String) delegateExecution.getVariable("username");
         String password = (String) delegateExecution.getVariable("password");
+        log.info("Adding user: username={}, password={}", username, password);
 
         // Create user object
         AuthDTO user = new AuthDTO(username, password);
+        log.info("User: {}", user);
 
         // Send user data to user service
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<AuthDTO> request = new HttpEntity<>(user);
+        log.info("Sending user data to user service: {}", request.getBody());
 
         ResponseEntity<String> response;
         try {
@@ -50,6 +55,7 @@ public class UserAdd implements JavaDelegate {
         HttpHeaders headers = response.getHeaders();
         delegateExecution.setVariable("headers", headers); // TODO: need to test to send only auth ticket or userid
 
+        delegateExecution.setVariable("user", user);
 
         // Handle response (success/failure)
         String responseBody = response.getBody();

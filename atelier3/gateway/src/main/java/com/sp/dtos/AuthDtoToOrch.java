@@ -12,5 +12,12 @@ public class AuthDtoToOrch {
     public void setVariables(Map<String, Variable> variables) {
         this.variables = variables;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "variables=" + variables +
+                '}';
+    }
 }
 

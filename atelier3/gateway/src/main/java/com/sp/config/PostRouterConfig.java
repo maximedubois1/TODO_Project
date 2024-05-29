@@ -2,6 +2,7 @@ package com.sp.config;
 
 import com.sp.dtos.AuthDTO;
 import com.sp.dtos.AuthDtoToOrch;
+import com.sp.dtos.ToOrch;
 import com.sp.utils.GatewayUtils;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -17,11 +18,11 @@ public class PostRouterConfig {
     RouteLocator userGateway(RouteLocatorBuilder routeLocatorBuilder) {
         return routeLocatorBuilder.routes()
 
-                .route(routeSpec -> routeSpec.path("auth-service/api/v1/auth/register")
+                .route(routeSpec -> routeSpec.path("/api/v1/auth/orch")
                         .and()
                         .method(HttpMethod.POST)
-                        .filters(f -> f.modifyRequestBody(AuthDtoToOrch.class, AuthDTO.class,
-                                        (exchange, authFromOrch) -> Mono.just(GatewayUtils.convertFromOrchestratorToAuthDto(authFromOrch)))
+                        .filters(f -> f.modifyRequestBody(AuthDTO.class, AuthDTO.class,
+                                        (exchange, authFromOrch) -> Mono.just(GatewayUtils.printValues(authFromOrch)))
                                 .setPath("/api/v1/auth/register"))
                         .uri("lb://auth-service"))
 

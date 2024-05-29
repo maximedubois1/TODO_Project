@@ -21,3 +21,5 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka.server.host}/eureka
+    fetch-registry: false
+    register-with-eureka: true

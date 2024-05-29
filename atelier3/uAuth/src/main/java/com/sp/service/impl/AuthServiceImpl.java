@@ -74,6 +74,9 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }
+        System.out.println(authDTO);
+        System.out.println(authDTO.getPassword());
+        System.out.println(authDTO.getSurname());
         UserEntity newUser = new UserEntity();
         newUser.setSurname(authDTO.getSurname());
         newUser.setName(authDTO.getSurname());

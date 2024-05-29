@@ -2,6 +2,7 @@ package com.sp.utils;
 
 import com.sp.dtos.AuthDTO;
 import com.sp.dtos.AuthDtoToOrch;
+import com.sp.dtos.ToOrch;
 import com.sp.dtos.Variable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ public class GatewayUtils {
 
     public static AuthDtoToOrch convertAuthDtoForOrchestrator(AuthDTO authDTO) {
         log.info("Converting auth dto for orchestrator");
+        log.info("AuthDTO: username : {}, pwd : {}", authDTO.getUsername(),  authDTO.getPassword());
         AuthDtoToOrch authDtoToOrch = new AuthDtoToOrch();
         Map<String, Variable> variables = new HashMap<>();
 
@@ -29,15 +31,26 @@ public class GatewayUtils {
         variables.put("password", passwordVariable);
 
         authDtoToOrch.setVariables(variables);
+        log.info("AuthDtoToOrch: {}", authDtoToOrch.getVariables().toString());
+        log.info("AuthDtoToOrch: username : {}, pwd : {}", authDtoToOrch.getVariables().get("username").getType(),  authDtoToOrch.getVariables().get("password").getType());
 
         return authDtoToOrch;
     }
 
-    public static AuthDTO convertFromOrchestratorToAuthDto(AuthDtoToOrch authDtoToOrch) {
-        log.info("Converting from orchestrator to auth dto");
-        AuthDTO authDTO = new AuthDTO();
-        authDTO.setSurname(authDtoToOrch.getVariables().get("username").getValue());
-        authDTO.setPassword(authDtoToOrch.getVariables().get("password").getValue());
-        return authDTO;
+    public static AuthDTO printValues(AuthDTO authFromOrch) {
+        log.info("Printing values from orchestrator");
+        log.info("AuthDTO: {}", authFromOrch.toString());
+        log.info("AuthDTO: username : {}, pwd : {}", authFromOrch.getUsername(),  authFromOrch.getPassword());
+        return authFromOrch;
     }
+
+//    public static AuthDTO convertFromOrchestratorToAuthDto(AuthDtoToOrch authDtoToOrch) {
+//        log.info("Converting from orchestrator to auth dto");
+//        log.info("AuthDtoToOrch: {}", authDtoToOrch.getVariables().toString());
+//        log.info("AuthDtoToOrch: username : {}, pwd : {}", authDtoToOrch.getVariables().get("username").getValue(),  authDtoToOrch.getVariables().get("password").getValue());
+//        AuthDTO authDTO = new AuthDTO();
+//        authDTO.setSurname(authDtoToOrch.getVariables().get("username").getValue());
+//        authDTO.setPassword(authDtoToOrch.getVariables().get("password").getValue());
+//        return authDTO;
+//    }
 }

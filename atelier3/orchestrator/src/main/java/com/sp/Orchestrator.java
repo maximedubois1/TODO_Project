@@ -14,17 +14,8 @@ import org.springframework.context.event.EventListener;
 @EnableDiscoveryClient
 public class Orchestrator {
 
-	@Autowired
-	private RuntimeService runtimeService;
-
 	public static void main(String[] args) {
 
 		SpringApplication.run(Orchestrator.class, args);
 	}
-
-	@EventListener
-	public void processPostDeploy(PostDeployEvent event) {
-		//runtimeService.startProcessInstanceByKey("register");
-	}
-
 }

@@ -1,4 +1,4 @@
-package com.sp.service_registration_and_discovery;
+package com.sp.discovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 @SpringBootApplication
 @EnableEurekaServer
-public class ServiceRegistrationAndDiscoveryApplication {
+public class DiscoveryServerApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceRegistrationAndDiscoveryApplication.class, args);
+		SpringApplication.run(DiscoveryServerApp.class, args);
 	}
 
 }

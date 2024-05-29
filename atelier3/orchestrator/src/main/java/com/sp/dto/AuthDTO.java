@@ -5,7 +5,9 @@ public class AuthDTO {
     private String surname;
     private String password;
 
-    public AuthDTO(String username, String email) {
+    public AuthDTO(String surname, String password) {
+        this.surname = surname;
+        this.password = password;
     }
 
     public String getSurname() {

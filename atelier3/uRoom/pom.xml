@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tuto.springboot</groupId>
-	<artifactId>SPWebAppStep1</artifactId>
+	<artifactId>uRoom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SPWebApp</name>
+	<name>uRoom</name>
 	<description>Tuto project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
