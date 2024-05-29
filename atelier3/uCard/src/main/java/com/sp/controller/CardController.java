@@ -79,9 +79,9 @@ public class CardController {
     }
 
     @PostMapping("/fight")
-    public ResponseEntity<String> fight(@RequestBody FightDTO fightDTO) {
+    public ResponseEntity<Long> fight(@RequestBody FightDTO fightDTO) {
         Long winnerID = this.fightService.fight(fightDTO);
-        return ResponseEntity.ok("Fight");
+        return ResponseEntity.ok(winnerID);
     }
 
 

@@ -1,6 +1,7 @@
 package com.sp.service.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.sp.mapper.UserMapper;
 import com.sp.model.UserEntity;
 import com.sp.model.dto.AuthDTO;
 import com.sp.model.dto.JwtResponseDTO;
@@ -24,12 +25,15 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
+    private final UserMapper userMapper;
 
-    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository, AuthenticationManager authenticationManager) {
+    public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository,
+                           AuthenticationManager authenticationManager, UserMapper userMapper) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -66,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtResponseDTO register(AuthDTO authDTO) {
+    public UserDTO register(AuthDTO authDTO) {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }
@@ -78,7 +82,6 @@ public class AuthServiceImpl implements AuthService {
         newUser.setName(authDTO.getSurname());
         newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
-        userRepository.save(newUser);
-        return authenticate(authDTO);
+        return this.userMapper.toDTO(this.userRepository.save(newUser));
     }
 }

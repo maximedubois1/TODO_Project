@@ -48,17 +48,14 @@ public class AuthController {
     }
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
-        JwtResponseDTO jwt = authService.register(authDTO);
+    public ResponseEntity<Long> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
+        UserDTO userDTO = authService.register(authDTO);
 
-        if (jwt == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(-1L);
         }
 
-        String token = jwt.getAccessToken();
-        Cookie jwtCookie = new Cookie("auth_jwt", token);
-        response.addCookie(jwtCookie);
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString()).body("Login successful");
+        return ResponseEntity.ok().body(userDTO.getId());
     }
 
     @RequestMapping(value = {"/is-connected"}, method = RequestMethod.POST)

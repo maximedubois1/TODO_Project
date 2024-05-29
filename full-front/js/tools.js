@@ -11,11 +11,14 @@ function getRandomInt(max) {
 }
 
 function setTemplate(idTemplate, idContainer, cList) {
+    console.log(cList);
     let template = document.querySelector(idTemplate);
     if (template == null) {
         return
     }
-
+    if (cList[0] === undefined) {
+        return;
+    }
     for (const card of cList) {
         let clone = document.importNode(template.content, true);
 
@@ -48,17 +51,19 @@ function setTemplateRoom(idTemplate, idContainer, rList) {
 
     for (const room of rList) {
         let clone = document.importNode(template.content, true);
+        fetchUserInfoByID(room.ownerID).then(user => {
+            newContent = clone.firstElementChild.innerHTML
+                .replace(/{{room_name}}/g, room.name)
+                .replace(/{{user_id}}/g, user.surname)
+                .replace(/{{bet}}/g, room.bet)
+                .replace(/{{room_id}}/g, room.name);
 
-        newContent = clone.firstElementChild.innerHTML
-            .replace(/{{room_name}}/g, room.room_name)
-            .replace(/{{user_id}}/g, room.user_id)
-            .replace(/{{bet}}/g, room.bet)
-            .replace(/{{room_id}}/g, room.id);
+            clone.firstElementChild.innerHTML = newContent;
 
-        clone.firstElementChild.innerHTML = newContent;
+            let roomContainer = document.querySelector(idContainer);
+            roomContainer.appendChild(clone);
 
-        let roomContainer = document.querySelector(idContainer);
-        roomContainer.appendChild(clone);
+        });
     }
 }
 

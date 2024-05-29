@@ -8,6 +8,7 @@ import com.sp.service.RoomsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,7 @@ public class RoomsServiceImpl implements RoomsService {
     @Override
     public RoomDTO createRoom(RoomDTO roomDTO) {
         RoomEntity roomEntity = new RoomEntity();
+        System.out.println(roomDTO.getName());
         roomEntity.setName(roomDTO.getName());
         roomEntity.setBet(roomDTO.getBet());
         roomEntity.setOwnerID(roomDTO.getOwnerID());
@@ -52,7 +54,22 @@ public class RoomsServiceImpl implements RoomsService {
     @Override
     public void joinRoom(String roomName, Long userID) {
         RoomEntity roomEntity = this.roomRepository.findByName(roomName).get();
-        roomEntity.setOpponentID(userID);
+        if (Objects.equals(roomEntity.getOwnerID(), userID)) {
+            roomEntity.setOwnerID(userID);
+        }else {
+            roomEntity.setOpponentID(userID);
+        }
+        this.roomRepository.save(roomEntity);
+    }
+
+    @Override
+    public void setCard(String roomName, Long userID, Long cardID) {
+        RoomEntity roomEntity = this.roomRepository.findByName(roomName).get();
+        if (Objects.equals(roomEntity.getOwnerID(), userID)) {
+            roomEntity.setOwnerCardID(cardID);
+        } else {
+            roomEntity.setOpponentCardID(cardID);
+        }
         this.roomRepository.save(roomEntity);
     }
 
