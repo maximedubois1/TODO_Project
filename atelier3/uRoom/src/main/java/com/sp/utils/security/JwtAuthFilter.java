@@ -1,6 +1,5 @@
 package com.sp.utils.security;
 
-import com.sp.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
