@@ -1,7 +1,9 @@
 package com.sp.service;
 
 import com.sp.model.dto.CardDTO;
+import jakarta.servlet.http.Cookie;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,4 +88,19 @@ public interface CardService {
      * @return the updated CardDTO object.
      */
     CardDTO update(CardDTO cardDTO);
+
+    /**
+     * Buys a card.
+     *
+     * @param userId the ID of the user who will buy the card.
+     * @param cardId the ID of the card.
+     */
+    void buyCard(Long userId, Long cardId, Cookie cookie) throws IOException;
+
+    /**
+     * Sells a card.
+     *
+     * @param cardId the ID of the card.
+     */
+    void sellCard(Long cardId, Cookie cookie) throws IOException;
 }

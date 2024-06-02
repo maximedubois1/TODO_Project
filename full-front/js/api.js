@@ -97,7 +97,7 @@ async function createUser(user) {
         .then(async data => {
             console.log('Success:', data);
             userid = data;
-            await generateUserCards(data);
+            // await generateUserCards(data);
             window.location.href = "loginUser.html";
         })
         .catch((error) => {
@@ -106,6 +106,7 @@ async function createUser(user) {
 }
 
 async function authUser(data) {
+    deleteCookie('auth_jwt');
     return fetch(`${URL_BASE}:${Auth_PORT}/api/v1/auth/login`, {
         method: 'POST',
         headers: {
@@ -258,7 +259,8 @@ async function fetchRoomInfo(roomName){
 }
 
 async function fight(fightDTO){
-    return fetch(`${URL_BASE}:${Card_PORT}/api/v1/cards/fight`, {
+    console.log(fightDTO);
+    return fetch(`${URL_BASE}:${Room_PORT}/api/v1/rooms/fight`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -266,9 +268,9 @@ async function fight(fightDTO){
         credentials: 'include',
         body: JSON.stringify(fightDTO),
     })
-        // .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-            console.log(data)
-            return data
+            console.log("fight"  + data);
+            return data;
         })
 }

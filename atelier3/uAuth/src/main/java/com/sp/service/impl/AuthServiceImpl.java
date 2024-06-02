@@ -10,13 +10,17 @@ import com.sp.repository.UserRepository;
 import com.sp.service.AuthService;
 import com.sp.service.UserService;
 import com.sp.utils.CookieUtil;
+import com.sp.utils.HttpUtils;
 import com.sp.utils.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -26,6 +30,9 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+
+    @Value("${ucard.url}")
+    private String ucardUrl;
 
     public AuthServiceImpl(UserService userService, JwtService jwtService, UserRepository userRepository,
                            AuthenticationManager authenticationManager, UserMapper userMapper) {
@@ -70,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserDTO register(AuthDTO authDTO) {
+    public UserDTO register(AuthDTO authDTO) throws IOException {
         if (userRepository.findBySurname(authDTO.getSurname()) != null) {
             return null;
         }
@@ -82,6 +89,9 @@ public class AuthServiceImpl implements AuthService {
         newUser.setName(authDTO.getSurname());
         newUser.setPassword(BCrypt.withDefaults().hashToString(12, authDTO.getPassword().toCharArray()));
         newUser.setWallet(0);
-        return this.userMapper.toDTO(this.userRepository.save(newUser));
+        UserEntity userEntity = this.userRepository.save(newUser);
+        String response = HttpUtils.sendPostRequest(ucardUrl + "/generate-for/" + userEntity.getId().toString(), "");
+
+        return this.userMapper.toDTO(userEntity);
     }
 }

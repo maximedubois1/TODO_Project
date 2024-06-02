@@ -7,6 +7,15 @@ public class RoomDTO {
     private Long ownerCardID;
     private Long opponentID;
     private Long opponentCardID;
+    private Long winnerID;
+
+    public void setWinnerID(Long winnerID) {
+        this.winnerID = winnerID;
+    }
+
+    public Long getWinnerID() {
+        return winnerID;
+    }
 
     public String getName() {
         return name;

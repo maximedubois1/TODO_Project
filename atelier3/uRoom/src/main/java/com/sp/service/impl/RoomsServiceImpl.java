@@ -1,12 +1,17 @@
 package com.sp.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sp.mapper.RoomMapper;
 import com.sp.model.RoomEntity;
+import com.sp.model.dto.FightDTO;
 import com.sp.model.dto.RoomDTO;
 import com.sp.repository.RoomRepository;
 import com.sp.service.RoomsService;
+import com.sp.utils.HttpUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +22,9 @@ public class RoomsServiceImpl implements RoomsService {
     RoomRepository roomRepository;
     RoomMapper roomMapper;
 
+    @Value("${ucards.url}")
+    private String ucardurl;
+
     public RoomsServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
@@ -24,7 +32,7 @@ public class RoomsServiceImpl implements RoomsService {
 
     @Override
     public List<RoomDTO> getAll() {
-        List<RoomEntity> roomEntities = this.roomRepository.findAll();
+        List<RoomEntity> roomEntities = this.roomRepository.AvailableRooms();
         return this.roomMapper.toDTOs(roomEntities);
     }
 
@@ -56,7 +64,7 @@ public class RoomsServiceImpl implements RoomsService {
         RoomEntity roomEntity = this.roomRepository.findByName(roomName).get();
         if (Objects.equals(roomEntity.getOwnerID(), userID)) {
             roomEntity.setOwnerID(userID);
-        }else {
+        } else {
             roomEntity.setOpponentID(userID);
         }
         this.roomRepository.save(roomEntity);
@@ -85,5 +93,31 @@ public class RoomsServiceImpl implements RoomsService {
         RoomEntity roomEntity = this.roomRepository.findByName(roomName).get();
         roomEntity.setOpponentCardID(cardID);
         this.roomRepository.save(roomEntity);
+    }
+
+    @Override
+    public void setWinner(String roomName, Long userID) {
+        RoomEntity roomEntity = this.roomRepository.findByName(roomName).get();
+        roomEntity.setWinnerID(userID);
+    }
+
+    @Override
+    public Long fight(FightDTO fightDTO) throws IOException {
+        RoomEntity roomEntity = this.roomRepository.findByName(fightDTO.getRoomName()).get();
+        if (roomEntity.getWinnerID() != null) {
+            return roomEntity.getWinnerID();
+        }
+        fightDTO.setBet(roomEntity.getBet());
+        fightDTO.setOpponentID(roomEntity.getOpponentID());
+        fightDTO.setOwnerID(roomEntity.getOwnerID());
+        fightDTO.setOwnerCardID(roomEntity.getOwnerCardID());
+        fightDTO.setOpponentCardID(roomEntity.getOpponentCardID());
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("fightDTO: " + objectMapper.writeValueAsString(fightDTO));
+        String response = HttpUtils.sendPostRequest(ucardurl + "/api/v1/cards/fight", objectMapper.writeValueAsString(fightDTO));
+        Long winnerID = objectMapper.readValue(response, Long.class);
+        roomEntity.setWinnerID(winnerID);
+        this.roomRepository.save(roomEntity);
+        return winnerID;
     }
 }

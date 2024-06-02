@@ -7,3 +7,5 @@ eureka:
     register-with-eureka: true
     fetch-registry: false
 
+uauth:
+  url: http://gateway:8080

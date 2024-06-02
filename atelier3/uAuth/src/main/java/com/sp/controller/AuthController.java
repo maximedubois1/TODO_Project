@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -49,7 +51,12 @@ public class AuthController {
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public ResponseEntity<Long> register(@RequestBody AuthDTO authDTO, HttpServletResponse response) {
-        UserDTO userDTO = authService.register(authDTO);
+        UserDTO userDTO = null;
+        try {
+            userDTO = authService.register(authDTO);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         if (userDTO == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(-1L);

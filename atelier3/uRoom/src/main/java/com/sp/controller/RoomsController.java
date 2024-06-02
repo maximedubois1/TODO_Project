@@ -1,5 +1,6 @@
 package com.sp.controller;
 
+import com.sp.model.dto.FightDTO;
 import com.sp.model.dto.RoomDTO;
 import com.sp.service.RoomsService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -62,6 +64,23 @@ public class RoomsController {
     public ResponseEntity<String> addOpponentCard(@PathVariable String roomName, @PathVariable Long cardID) {
         this.roomsService.addOpponentCard(roomName, cardID);
         return ResponseEntity.ok("Opponent card added");
+    }
+
+    @PostMapping("/setwinner/{roomName}/{userID}")
+    public ResponseEntity<String> setWinner(@PathVariable String roomName, @PathVariable Long userID) {
+        this.roomsService.setWinner(roomName, userID);
+        return ResponseEntity.ok("Winner set");
+    }
+
+    @PostMapping("/fight")
+    public ResponseEntity<Long> fight(@RequestBody FightDTO fightDTO) {
+        Long winnerID = null;
+        try {
+            winnerID = this.roomsService.fight(fightDTO);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(winnerID);
     }
 
 }

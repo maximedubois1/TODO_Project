@@ -1,7 +1,9 @@
 package com.sp.service;
 
+import com.sp.model.dto.FightDTO;
 import com.sp.model.dto.RoomDTO;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,4 +73,20 @@ public interface RoomsService {
      * @param cardID the id of the card
      */
     void addOpponentCard(String roomName, Long cardID);
+
+    /**
+     * Set the winner of the room
+     *
+     * @param roomName the name of the room
+     * @param userID the id of the user
+     */
+    void setWinner(String roomName, Long userID);
+
+    /**
+     * start the Fight
+     *
+     * @param fightDTO the fight
+     * @return the winner of the fight
+     */
+    Long fight(FightDTO fightDTO) throws IOException;
 }

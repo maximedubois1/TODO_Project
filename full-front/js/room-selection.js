@@ -7,7 +7,7 @@ function onProcess(id){
 
     data = {"name":roomName[0].value, "bet":betName[0].value, "ownerID":guser.id}
     console.log(data);
-    createRoom(data);
+    createRoom(data).then(() => window.location.reload())
 }
 
 function onProcessGame(obj){
