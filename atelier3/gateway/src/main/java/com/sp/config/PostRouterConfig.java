@@ -43,6 +43,11 @@ public class PostRouterConfig {
 //                                .setPath("/engine-rest/process-definition/key/buy/start" + userId))
 //                        .uri("lb://orchestrator"))
 
+                .route(routeSpec -> routeSpec.path("/api/v1/auth/login")
+                        .and()
+                        .method(HttpMethod.POST)
+                        .uri("lb://auth-service"))
+
                 .build();
     }
 }

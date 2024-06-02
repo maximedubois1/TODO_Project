@@ -47,7 +47,7 @@ public class UserAdd implements JavaDelegate {
         try {
             response = restTemplate.exchange(USER_SERVICE_URL, HttpMethod.POST, request, String.class);
         } catch (RestClientException e) {
-            log.error("Failed to access to the platform");
+            log.error("Failed to access to the platform : {}", e.getMessage());
             throw new BpmnError("Failed to access to the platform");
         }
 
