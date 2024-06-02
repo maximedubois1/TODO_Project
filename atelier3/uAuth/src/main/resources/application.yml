@@ -1,6 +1,10 @@
+discovery:
+  server:
+    url: discovery
+
 eureka:
   server:
-    host: discovery:8761
+    host: ${discovery.server.url}:8761
   client:
     serviceUrl:
       defaultZone: http://${eureka.server.host}/eureka
