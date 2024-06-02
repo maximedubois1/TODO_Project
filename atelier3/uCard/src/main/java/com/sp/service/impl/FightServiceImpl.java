@@ -42,6 +42,7 @@ public class FightServiceImpl implements FightService {
 
             this.cardService.update(ownerCard);
             this.cardService.update(opponentCard);
+
             deliverPrice(fightDTO.getOpponentID(), fightDTO.getOwnerID(), fightDTO.getBet());
             return fightDTO.getOpponentID();
         } else if (opponentCard.getHp() <= 0) { //owner wins
@@ -52,6 +53,7 @@ public class FightServiceImpl implements FightService {
 
             this.cardService.update(ownerCard);
             this.cardService.update(opponentCard);
+
             deliverPrice(fightDTO.getOwnerID(), fightDTO.getOpponentID(), fightDTO.getBet());
             return fightDTO.getOwnerID();
         }else {

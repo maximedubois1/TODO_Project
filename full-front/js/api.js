@@ -259,7 +259,8 @@ async function fetchRoomInfo(roomName){
 }
 
 async function fight(fightDTO){
-    return fetch(`${URL_BASE}:${Card_PORT}/api/v1/cards/fight`, {
+    console.log(fightDTO);
+    return fetch(`${URL_BASE}:${Room_PORT}/api/v1/rooms/fight`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

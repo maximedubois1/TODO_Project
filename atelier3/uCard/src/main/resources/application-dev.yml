@@ -6,3 +6,5 @@ eureka:
 
 uauth:
   url: http://localhost:8080
+urooms:
+  url: http://localhost:8080

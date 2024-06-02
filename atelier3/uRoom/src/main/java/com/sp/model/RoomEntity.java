@@ -28,6 +28,17 @@ public class RoomEntity {
     @Column(name = "opponent_card_id")
     private Long opponentCardID;
 
+    @Column(name = "winner_id")
+    private Long winnerID;
+
+    public Long getWinnerID() {
+        return winnerID;
+    }
+
+    public void setWinnerID(Long winnerID) {
+        this.winnerID = winnerID;
+    }
+
     public String getName() {
         return name;
     }

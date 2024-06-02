@@ -6,3 +6,5 @@ discovery:
   server:
     url: localhost
 
+ucards:
+  url: http://localhost:8080

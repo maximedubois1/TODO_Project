@@ -1,16 +1,23 @@
 let guser;
 let groom;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const roomId = urlParams.get('roomid')
 
 function onProcess(id) {
     console.log(id);
     console.log("Play");
     let fightdto = {};
-    fightdto.roomName = groom.roomName;
+    fightdto.roomName = roomId;
     fightdto.ownerID = groom.ownerID;
     fightdto.ownerCardID = groom.ownerCardID;
     fightdto.opponentID = groom.opponentID;
     fightdto.opponentCardID = groom.opponentCardID;
     fightdto.bet = groom.bet;
+    fightdto.winnerId = groom.winnerId;
+
+    console.log(fightdto);
+    
     fight(fightdto).then(r => {
         console.log("mon id :"  + guser.id + " r: " + r);
         if (guser.id == r.trim()) {
@@ -79,9 +86,7 @@ function setUserInfo(user) {
     document.getElementById("walletId").innerHTML = user.wallet;
 }
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const roomId = urlParams.get('roomid')
+
 
 fetchUserInfo().then(r => {
     setUserInfo(r);
