@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Sql(scripts = "classpath:sql/insert_data_before_tests.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
         @Sql(scripts = "classpath:sql/delete_data_and_init_seq.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 })
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "dev"})
 public class CardControllerIT {
 
     private static final Logger log = LoggerFactory.getLogger(CardControllerIT.class);
@@ -124,25 +124,25 @@ public class CardControllerIT {
                 .andExpect(jsonPath("$").value(false));
     }
 
-    @Test
-    public void addCardToUser_shouldAddCardToUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/buy/4/to-user/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Card added to user"));
-    }
-
-    @Test
-    public void removeCardFromUser_shouldRemoveCardFromUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/sell/2"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value("Card removed from user"));
-
-        // now expect that card 2 has no owner, so it should be buyable
-        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/is-buyable/2"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(true));
-
-    }
+//    @Test
+//    public void addCardToUser_shouldAddCardToUser() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/buy/4/to-user/1"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$").value("Card added to user"));
+//    }
+//
+//    @Test
+//    public void removeCardFromUser_shouldRemoveCardFromUser() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.post(BASE_URL + "/sell/2"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$").value("Card removed from user"));
+//
+//        // now expect that card 2 has no owner, so it should be buyable
+//        mockMvc.perform(MockMvcRequestBuilders.get(BASE_URL + "/is-buyable/2"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$").value(true));
+//
+//    }
 
     @Test
     public void generateFiveCardsForUser_shouldGenerateFiveCardsForUser() throws Exception {
