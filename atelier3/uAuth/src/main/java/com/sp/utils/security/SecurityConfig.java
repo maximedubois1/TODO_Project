@@ -27,6 +27,9 @@ public class SecurityConfig {
     @Autowired
     JwtAuthFilter jwtAuthFilter;
 
+    @Autowired
+    OriginFilter originFilter;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
@@ -40,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/**").authenticated())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(originFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 

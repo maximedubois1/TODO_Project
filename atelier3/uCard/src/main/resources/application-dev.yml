@@ -1,5 +1,7 @@
 db:
   ip: localhost
-eureka:
-  server:
-    host: localhost:8761
+#eureka:
+#  server:
+#    host: localhost:8761
+uauth:
+  url: http://localhost:8081

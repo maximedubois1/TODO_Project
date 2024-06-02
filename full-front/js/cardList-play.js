@@ -10,6 +10,7 @@ function onProcess(id) {
     fightdto.ownerCardID = groom.ownerCardID;
     fightdto.opponentID = groom.opponentID;
     fightdto.opponentCardID = groom.opponentCardID;
+    fightdto.bet = groom.bet;
     fight(fightdto).then(r => {
         console.log("mon id :"  + guser.id + " r: " + r);
         if (guser.id == r.trim()) {

@@ -7,6 +7,15 @@ public class FightDTO {
     private Long ownerCardID;
     private Long opponentID;
     private Long opponentCardID;
+    private int bet;
+
+    public int getBet() {
+        return bet;
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
 
     public String getRoomName() {
         return roomName;

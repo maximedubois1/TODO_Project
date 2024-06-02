@@ -6,8 +6,12 @@ import com.sp.model.dto.CardDTO;
 import com.sp.repository.CardRepository;
 import com.sp.service.CardGenerator;
 import com.sp.service.CardService;
+import com.sp.utils.HttpUtils;
+import jakarta.servlet.http.Cookie;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +23,9 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
     private final CardMapper cardMapper;
     private final CardGenerator cardGenerator;
+
+    @Value("${uauth.url}")
+    private String uauthUrl;
 
     public CardServiceImpl(CardRepository cardRepository, CardMapper cardMapper, CardGenerator cardGenerator) {
         this.cardRepository = cardRepository;
@@ -97,5 +104,32 @@ public class CardServiceImpl implements CardService {
         Card card = this.cardMapper.toEntity(cardDTO);
         Card updatedCard = this.cardRepository.save(card);
         return this.cardMapper.toDTO(updatedCard);
+    }
+
+    @Override
+    public void buyCard(Long userId, Long cardId, Cookie cookie) throws IOException {
+        Card card = this.cardRepository.findById(cardId).orElseThrow();
+        int amount = card.getPrice();
+        String response = HttpUtils.sendPostRequest(uauthUrl + "/api/v1/users/wallet/" + userId + "/sub/" + amount, "");
+        if (!response.equals("true")) {
+            throw new IOException("Failed to buy card");
+        } else {
+            System.out.println("Card bought successfully");
+            setOwner(userId, cardId);
+        }
+    }
+
+    @Override
+    public void sellCard(Long cardId, Cookie cookie) throws IOException {
+        Card card = this.cardRepository.findById(cardId).orElseThrow();
+        int amount = card.getPrice();
+        Long userId = card.getUserId();
+        String response = HttpUtils.sendPostRequest(uauthUrl + "/api/v1/users/wallet/" + userId + "/add/" + amount, "");
+        if (!response.equals("true")) {
+            throw new IOException("Failed to sell card");
+        } else {
+            System.out.println("Card sold successfully");
+            setOwner(null, cardId);
+        }
     }
 }
