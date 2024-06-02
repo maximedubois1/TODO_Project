@@ -1,14 +1,14 @@
-//package com.sp.utils;
-//
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.web.cors.CorsConfiguration;
-//import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-//import org.springframework.web.filter.CorsFilter;
-//import org.springframework.web.servlet.config.annotation.CorsRegistry;
-//import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-//import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-//
+package com.sp.utils;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 //@Configuration
 //@EnableWebMvc
 //public class WebConfig implements WebMvcConfigurer {
@@ -19,10 +19,10 @@
 //                .allowedHeaders("*")
 //                .allowedMethods("*")
 //                .allowedOriginPatterns("*")
-////                .allowedOrigins("http://localhost:3000", "http://localhost:63342")
+////                .allowedOrigins("http://localhost:3000", "http://localhost:63343")
 //                .allowCredentials(true);
 //    }
-//
+
 //    @Bean
 //    public CorsFilter corsFilter() {
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -36,4 +36,4 @@
 //        return new CorsFilter(source);
 //    }
 //}
-//
+

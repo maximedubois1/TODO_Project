@@ -23,7 +23,7 @@ public class OriginFilter extends OncePerRequestFilter {
         String host = request.getHeader("Host");
         System.out.println("host: " + host);
 
-        if (host.contains("localhost:8081")) {
+        if (host.contains("localhost:8081") || host.contains("daddy-legion.lan:8081")) {
             System.out.println("OriginFilter: localhost");
             InternalRequestAuthentication authentication = new InternalRequestAuthentication();
             SecurityContextHolder.getContext().setAuthentication(authentication);

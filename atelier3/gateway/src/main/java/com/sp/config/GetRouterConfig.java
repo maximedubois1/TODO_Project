@@ -44,9 +44,13 @@ public class GetRouterConfig {
                             return chain.filter(exchange);
                         }))
                         .uri("lb://auth-service"))
-                .route(routeSpec -> routeSpec.path("/api/v1/room")
+                .route(routeSpec -> routeSpec.path("/api/v1/rooms/**")
                         .and()
                         .method(HttpMethod.GET)
+                        .filters(f -> f.filter((exchange, chain) -> {
+                            log.info("Request: {}", exchange.getRequest().getURI());
+                            return chain.filter(exchange);
+                        }))
                         .uri("lb://room-service"))
                 .build();
     }

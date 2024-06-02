@@ -6,6 +6,8 @@ import com.sp.model.dto.UserDTO;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
+
 /**
  * This interface defines the operations that can be performed for authentication.
  */
@@ -40,5 +42,5 @@ public interface AuthService {
      * @param authDTO the AuthDTO object containing the registration details of the user.
      * @return a Cookie object containing the session details if the registration was successful.
      */
-    UserDTO register(AuthDTO authDTO);
+    UserDTO register(AuthDTO authDTO) throws IOException;
 }
