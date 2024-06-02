@@ -20,11 +20,12 @@ public class OriginFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        System.out.println("OriginFilter: doFilterInternal");
         String host = request.getHeader("Host");
         System.out.println("host: " + host);
 
-        if (host.contains("localhost:8081") || host.contains("daddy-legion.lan:8081")) {
-            System.out.println("OriginFilter: localhost");
+        if (host.contains(":8081")) {
+            System.out.println("OriginFilter: " + host + " is allowed");
             InternalRequestAuthentication authentication = new InternalRequestAuthentication();
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

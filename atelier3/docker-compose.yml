@@ -17,21 +17,10 @@ services:
     depends_on:
       - discovery
 
-  orchestrator:
-    build:
-      context: orchestrator
-      dockerfile: Dockerfile
-    ports:
-      - "8084:8084"
-    depends_on:
-      - discovery
-
   ucard:
     build:
       context: uCard
       dockerfile: Dockerfile
-    ports:
-      - "8090:8090"
     depends_on:
       - db
       - discovery
@@ -40,8 +29,14 @@ services:
     build:
       context: uAuth
       dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
+    depends_on:
+      - db
+      - discovery
+
+  uroom:
+    build:
+      context: uRoom
+      dockerfile: Dockerfile
     depends_on:
       - db
       - discovery
